@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en" data-mode="internal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ali Dandin Global Discovery Commerce Brand - Master Handoff</title>
+  <style>
+    :root {
+      --bg: #f3ecdf;
+      --paper: rgba(252, 248, 241, 0.94);
+      --paper-strong: #fffaf3;
+      --navy: #1e2a3a;
+      --navy-soft: #31435c;
+      --sand: #c2a57a;
+      --sand-soft: #ead9c0;
+      --terracotta: #b96939;
+      --olive: #617147;
+      --ink: #1f2a36;
+      --muted: #67707a;
+      --line: rgba(30, 42, 58, 0.12);
+      --line-strong: rgba(30, 42, 58, 0.2);
+      --shadow: 0 24px 70px rgba(30, 42, 58, 0.08);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      line-height: 1.6;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(194, 165, 122, 0.16), transparent 24%),
+        radial-gradient(circle at top right, rgba(97, 113, 71, 0.08), transparent 18%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      width: min(calc(100% - 36px), 1440px);
+      margin: 0 auto;
+      padding: 26px 0 80px;
+      display: grid;
+      grid-template-columns: 310px minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .view-investor,
+    .view-internal,
+    .view-both {
+      min-width: 0;
+    }
+
+    html[data-mode="investor"] .view-internal {
+      display: none !important;
+    }
+
+    html[data-mode="internal"] .view-investor {
+      display: none !important;
+    }
+
+    .mode-copy {
+      display: none;
+    }
+
+    html[data-mode="investor"] .mode-copy.investor-copy,
+    html[data-mode="internal"] .mode-copy.internal-copy {
+      display: block;
+    }
+
+    aside {
+      position: sticky;
+      top: 18px;
+      align-self: start;
+      max-height: calc(100vh - 36px);
+      overflow: auto;
+      padding: 22px 20px;
+      border-radius: var(--radius);
+      background: rgba(252, 248, 241, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .sidebar-brand {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(145deg, rgba(194, 165, 122, 0.94), rgba(30, 42, 58, 0.95));
+      color: #fffaf3;
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+
+    .sidebar-kicker {
+      margin: 0 0 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--sand);
+    }
+
+    aside h1 {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.2;
+    }
+
+    aside p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .mode-panel {
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(30, 42, 58, 0.05), rgba(194, 165, 122, 0.08));
+      border: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    .panel-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      gap: 6px;
+      padding: 5px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--line);
+    }
+
+    .mode-button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 9px 14px;
+      background: transparent;
+      color: var(--navy-soft);
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .mode-button:hover,
+    .mode-button:focus-visible {
+      background: rgba(30, 42, 58, 0.08);
+      outline: none;
+    }
+
+    .mode-button.active {
+      background: var(--navy);
+      color: #fffaf3;
+      box-shadow: 0 8px 24px rgba(30, 42, 58, 0.18);
+    }
+
+    #mode-description {
+      margin-top: 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .toc {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 18px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      padding: 9px 10px;
+      border-radius: 12px;
+      color: var(--ink);
+      font-size: 0.94rem;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .toc a:hover,
+    .toc a:focus-visible {
+      background: rgba(194, 165, 122, 0.12);
+      border-color: rgba(194, 165, 122, 0.3);
+      outline: none;
+    }
+
+    .sidebar-foot {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    section {
+      margin-bottom: 26px;
+      padding: 34px;
+      border-radius: var(--radius);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 18px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(20, 31, 44, 0.98), rgba(31, 47, 66, 0.94)),
+        linear-gradient(180deg, rgba(194, 165, 122, 0.2), transparent);
+      color: #f7f4ee;
+      padding: 38px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto auto -110px -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(194, 165, 122, 0.28), transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: -80px -120px auto auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 0.77rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--sand);
+    }
+
+    h2,
+    h3 {
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h2 {
+      font-size: clamp(2.5rem, 4vw, 4.4rem);
+      max-width: 11ch;
+    }
+
+    .hero-grid,
+    .status-grid,
+    .card-grid,
+    .stats-grid,
+    .doc-grid,
+    .region-grid,
+    .timeline-grid,
+    .archive-grid,
+    .two-col,
+    .three-col {
+      display: grid;
+      gap: 14px;
+    }
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.95fr);
+      gap: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero p {
+      max-width: 64ch;
+      font-size: 1rem;
+      color: rgba(247, 244, 238, 0.88);
+      margin: 0 0 14px;
+    }
+
+    .hero .mode-panel {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .hero .mode-button {
+      color: rgba(247, 244, 238, 0.82);
+    }
+
+    .hero .mode-button:hover,
+    .hero .mode-button:focus-visible {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .hero .mode-button.active {
+      background: rgba(255, 250, 243, 0.96);
+      color: var(--navy);
+    }
+
+    .hero-sidecard {
+      position: relative;
+      z-index: 1;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-sidecard h3 {
+      margin-bottom: 8px;
+      font-size: 1.2rem;
+      color: #fffaf3;
+    }
+
+    .hero-sidecard p,
+    .hero-sidecard li {
+      color: rgba(247, 244, 238, 0.84);
+      font-size: 0.94rem;
+    }
+
+    .hero-sidecard ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .status-grid {
+      position: relative;
+      z-index: 1;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      margin-top: 22px;
+    }
+
+    .status-card,
+    .info-card,
+    .doc-card,
+    .region-card,
+    .timeline-card,
+    .note-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 16px 18px;
+    }
+
+    .hero .status-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .status-card strong,
+    .info-card strong,
+    .doc-card strong,
+    .region-card strong,
+    .timeline-card strong,
+    .note-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.98rem;
+    }
+
+    .status-card span,
+    .info-card p,
+    .doc-card p,
+    .region-card p,
+    .timeline-card p,
+    .note-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .hero .status-card span {
+      color: rgba(247, 244, 238, 0.76);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head p {
+      max-width: 66ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .scope-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+    }
+
+    .scope-shared {
+      background: rgba(194, 165, 122, 0.14);
+      color: #785d37;
+    }
+
+    .scope-investor {
+      background: rgba(30, 42, 58, 0.09);
+      color: var(--navy);
+    }
+
+    .scope-internal {
+      background: rgba(97, 113, 71, 0.12);
+      color: #4f6034;
+    }
+
+    .lede {
+      font-size: 1.04rem;
+      color: var(--ink);
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #ece4d7;
+      box-shadow: 0 16px 40px rgba(30, 42, 58, 0.12);
+    }
+
+    figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      margin-top: 18px;
+    }
+
+    .doc-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 18px;
+    }
+
+    .region-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 18px;
+    }
+
+    .timeline-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      margin-top: 18px;
+    }
+
+    .archive-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 16px;
+    }
+
+    .archive-grid figure {
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+    }
+
+    .archive-grid img {
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    ul,
+    ol {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.93rem;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    th {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      background: rgba(30, 42, 58, 0.04);
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .present {
+      background: rgba(97, 113, 71, 0.14);
+      color: #46582d;
+    }
+
+    .minimal {
+      background: rgba(185, 105, 57, 0.14);
+      color: #8d4e26;
+    }
+
+    .planned {
+      background: rgba(30, 42, 58, 0.08);
+      color: var(--navy);
+    }
+
+    .archive {
+      background: rgba(103, 112, 122, 0.14);
+      color: #46515d;
+    }
+
+    .doc-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .doc-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: var(--navy);
+      color: #fffaf3;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      background: #283952;
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .note-box {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--sand);
+      border-radius: 14px;
+      background: rgba(194, 165, 122, 0.09);
+      color: var(--ink);
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper-strong);
+      padding: 14px 18px;
+    }
+
+    details + details {
+      margin-top: 14px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .footer-note {
+      margin-top: 12px;
+      font-size: 0.87rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1120px) {
+      .page {
+        width: min(calc(100% - 24px), 1020px);
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      section,
+      .hero {
+        padding: 26px 20px;
+      }
+
+      .hero-grid,
+      .two-col,
+      .three-col {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .hero h2 {
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <div class="sidebar-brand">
+        <div class="mark">AD</div>
+        <div>
+          <p class="sidebar-kicker">Ali Dandin</p>
+          <h1>Master Handoff</h1>
+        </div>
+      </div>
+      <p>This page is the durable local handoff for the brand, built around the assets that actually exist in <code>handoff/assets</code>.</p>
+
+      <div class="mode-panel">
+        <span class="panel-label">View</span>
+        <div class="mode-switch" role="tablist" aria-label="Document mode">
+          <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
+          <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
+        </div>
+        <p id="mode-description">Internal view prioritizes assets, build gaps, sourcing notes, and execution sequence.</p>
+      </div>
+
+      <nav class="toc" aria-label="Table of contents">
+        <a class="view-both" href="#hero">Overview</a>
+        <a class="view-both" href="#file-index">File Index</a>
+        <a class="view-both" href="#summary">Summary</a>
+        <a class="view-both" href="#brand-identity">Brand Identity</a>
+        <a class="view-both" href="#product-system">Collection System</a>
+        <a class="view-investor" href="#investment-case">Investment Case</a>
+        <a class="view-internal" href="#commerce-build">Commerce Build</a>
+        <a class="view-internal" href="#sourcing-system">Sourcing System</a>
+        <a class="view-internal" href="#mills-itinerary">Mills &amp; Itinerary</a>
+        <a class="view-both" href="#financials">Financials &amp; Downloads</a>
+        <a class="view-investor" href="#roadmap">Growth Roadmap</a>
+        <a class="view-internal" href="#execution">Execution Priorities</a>
+        <a class="view-internal" href="#asset-register">Asset Register</a>
+        <a class="view-internal" href="#appendix-archive">Appendix A</a>
+        <a class="view-internal" href="#appendix-audit">Appendix B</a>
+      </nav>
+
+      <div class="sidebar-foot">
+        Root entry point: <code>../index.html</code><br>
+        Primary file: <code>handoff/index.html</code>
+      </div>
+    </aside>
+
+    <main>
+      <section id="hero" class="hero view-both">
+        <div class="eyebrow">Textile-led global discovery brand</div>
+        <div class="hero-grid">
+          <div>
+            <h2>Ali Dandin, reframed as a premium textile authority.</h2>
+            <p>
+              This handoff replaces the earlier canvas workflow with one local site that is readable, visual, and durable.
+              It keeps the surviving assets, cuts the filler, and turns the project into a usable brief for brand, product,
+              ecommerce, sourcing, and fundraising work.
+            </p>
+            <p>
+              Core thesis: <strong>Ali Dandin should launch as a destination-led textile discovery brand</strong>.
+              Travel and storytelling are support systems. The moat is judgment in material, sourcing, and curation.
+            </p>
+            <div class="mode-panel" style="margin-top: 18px;">
+              <span class="panel-label">Switch perspective</span>
+              <div class="mode-switch" role="tablist" aria-label="Hero mode switch">
+                <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
+                <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-sidecard">
+            <h3>What this page does</h3>
+            <ul>
+              <li>Uses the actual local images and docs that are in the folder now.</li>
+              <li>Separates investor-facing story from internal build guidance.</li>
+              <li>Flags what exists, what is thin, and what still needs real production.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <strong>4 core visuals</strong>
+            <span>Logo suite, homepage mockup, Kyoto Indigo board, and sourcing overview are embedded below.</span>
+          </div>
+          <div class="status-card">
+            <strong>3 supporting docs</strong>
+            <span>PDF, deck, and spreadsheet are locally present but remain lightweight placeholders.</span>
+          </div>
+          <div class="status-card">
+            <strong>1 canonical direction</strong>
+            <span>The site now treats textiles as the official wedge, not broad travel merch.</span>
+          </div>
+          <div class="status-card">
+            <strong>Archive retained</strong>
+            <span>Composite boards and slices are preserved late in the page instead of driving the story.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="file-index" class="view-both">
+        <div class="section-head">
+          <div>
+            <div class="section-title-wrap">
+              <span class="scope-badge scope-shared">Shared</span>
+              <h3>File Index</h3>
+            </div>
+          </div>
+          <p>What the page can actually reference from the current folder, normalized into stable names.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Canonical asset</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>investor_business_plan.pdf</code></td>
+                <td>PDF</td>
+                <td><span class="pill minimal">Present locally, minimal</span></td>
+                <td>One-page business-plan placeholder.</td>
+              </tr>
+              <tr>
+                <td><code>investor_deck.pptx</code></td>
+                <td>PPTX</td>
+                <td><span class="pill minimal">Present locally, minimal</span></td>
+                <td>Eight-slide outline deck.</td>
+              </tr>
+              <tr>
+                <td><code>financial_model.xlsx</code></td>
+                <td>XLSX</td>
+                <td><span class="pill minimal">Present locally, minimal</span></td>
+                <td>One-sheet monthly model stub.</td>
+              </tr>
+              <tr>
+                <td><code>logo_suite.png</code></td>
+                <td>PNG</td>
+                <td><span class="pill present">Present locally</span></td>
+                <td>Combined brand mark board.</td>
+              </tr>
+              <tr>
+                <td><code>shopify_homepage.png</code></td>
+                <td>PNG</td>
+                <td><span class="pill present">Present locally</span></td>
+                <td>Homepage reference for the storefront direction.</td>
+              </tr>
+              <tr>
+                <td><code>kyoto_indigo_collection.png</code></td>
+                <td>PNG</td>
+                <td><span class="pill present">Present locally</span></td>
+                <td>Hero collection board for the launch assortment.</td>
+              </tr>
+              <tr>
+                <td><code>global_sourcing_overview.png</code></td>
+                <td>PNG</td>
+                <td><span class="pill present">Present locally</span></td>
+                <td>Four-market sourcing visual.</td>
+              </tr>
+              <tr>
+                <td><code>archive/</code></td>
+                <td>PNG set</td>
+                <td><span class="pill archive">Archive only</span></td>
+                <td>Composite boards and slice artifacts from the earlier workflow.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="summary" class="view-both">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-shared">Shared</span>
+            <h3>Summary</h3>
+          </div>
+          <p>Same brand, different lens: investor view highlights the thesis; internal view highlights what is actually build-ready.</p>
+        </div>
+
+        <div class="mode-copy investor-copy">
+          <p class="lede">
+            This brand works because it narrows from generic travel commerce to a stronger claim: Ali Dandin discovers,
+            curates, and eventually designs premium textiles with place, process, and story built in.
+          </p>
+          <div class="card-grid">
+            <article class="info-card">
+              <strong>Problem</strong>
+              <p>Consumers want objects with origin and taste, but most marketplaces flatten both into commodity product.</p>
+            </article>
+            <article class="info-card">
+              <strong>Solution</strong>
+              <p>Destination-led textile collections paired with story, curation, and an editorial storefront.</p>
+            </article>
+            <article class="info-card">
+              <strong>Moat</strong>
+              <p>Ali’s textile background supports sourcing judgment, supplier language, and product credibility.</p>
+            </article>
+            <article class="info-card">
+              <strong>Current proof</strong>
+              <p>Enough visual material exists to frame the brand, but the investor docs still need real depth.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="mode-copy internal-copy">
+          <p class="lede">
+            The project now has one usable logo board, one storefront mockup, one collection board, one sourcing visual,
+            and three thin docs. That is enough to align the direction, but not enough to ship a polished brand system.
+          </p>
+          <div class="card-grid">
+            <article class="info-card">
+              <strong>What exists</strong>
+              <p>Visual concept set for brand, homepage, collection, and sourcing.</p>
+            </article>
+            <article class="info-card">
+              <strong>What is missing</strong>
+              <p>Standalone logo exports, collection/product screens, verified sourcing sheet, and a real financial model.</p>
+            </article>
+            <article class="info-card">
+              <strong>Immediate build</strong>
+              <p>Turn Kyoto Indigo and the homepage direction into a functioning Shopify MVP.</p>
+            </article>
+            <article class="info-card">
+              <strong>Execution rule</strong>
+              <p>Do not broaden the category set before the textile wedge is proven and visual assets are production-ready.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="brand-identity" class="view-both">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-shared">Shared</span>
+            <h3>Brand Identity</h3>
+          </div>
+          <p>The visual and verbal frame is premium, traveled, and materially literate rather than trendy or souvenir-led.</p>
+        </div>
+        <p>
+          Position the brand as <strong>the world’s textile discovery brand</strong>. The tone should feel calm, exacting,
+          and editorial. Midnight blue, sand, and cream hold the system together, with terracotta or olive used sparingly.
+          The headline voice should sound like a curator with taste, not a hype-forward DTC founder.
+        </p>
+        <figure>
+          <img src="assets/images/logo_suite.png" alt="Ali Dandin combined logo suite with primary logo, monogram, passport stamp, and textile globe variations.">
+          <figcaption>The combined logo board is usable directionally; the individual marks still need to be exported as separate files.</figcaption>
+        </figure>
+        <div class="card-grid" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Primary mark</strong>
+            <p>Compass-led wordmark for storefront, packaging, and brand headers.</p>
+          </article>
+          <article class="info-card">
+            <strong>AD monogram</strong>
+            <p>Small-format mark for social avatars, tags, and future favicon use.</p>
+          </article>
+          <article class="info-card">
+            <strong>Passport stamp</strong>
+            <p>Useful collection stamp for destination pages, inserts, and drop graphics.</p>
+          </article>
+          <article class="info-card">
+            <strong>Textile globe</strong>
+            <p>Symbolic brand emblem linking geography, material, and discovery.</p>
+          </article>
+        </div>
+        <div class="note-box">
+          Standalone logo exports are still planned. The combined board should not be treated as a finished brand package.
+        </div>
+      </section>
+
+      <section id="product-system" class="view-both">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-shared">Shared</span>
+            <h3>Collection System</h3>
+          </div>
+          <p>Launch with one coherent destination collection instead of a wide, mixed catalog.</p>
+        </div>
+        <p>
+          <strong>Kyoto Indigo</strong> is the right opening move because it already has the strongest visual cohesion in the
+          project and maps directly to the textile-led thesis. It gives the brand an immediate point of view: material,
+          dye, craft, and origin all read clearly without requiring explanation-heavy merchandising.
+        </p>
+        <figure>
+          <img src="assets/images/kyoto_indigo_collection.png" alt="Kyoto Indigo Collection board featuring throw, scarf, pillow, and packaging.">
+          <figcaption>The current collection board functions well as a launch-direction piece, but not yet as a complete PDP asset set.</figcaption>
+        </figure>
+        <div class="two-col" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Launch assortment</strong>
+            <ul>
+              <li>Indigo Linen Throw</li>
+              <li>Indigo Scarf</li>
+              <li>Indigo Pillow</li>
+              <li>Indigo Textile Set</li>
+            </ul>
+          </article>
+          <article class="info-card">
+            <strong>Collection rules</strong>
+            <ul>
+              <li>Name by destination and material, not by generic ecommerce convention.</li>
+              <li>Keep every product tied to process, place, and use.</li>
+              <li>Let packaging reinforce origin and limited-release value.</li>
+              <li>Do not imply separate SKU photos exist until they do.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="investment-case" class="view-investor">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-investor">Investor</span>
+            <h3>Investment Case</h3>
+          </div>
+          <p>The brand is more compelling as a specialized authority than as a generic travel store.</p>
+        </div>
+        <div class="card-grid">
+          <article class="info-card">
+            <strong>Category edge</strong>
+            <p>Premium textiles offer a cleaner bridge between story, margin, repeatability, and eventual private label expansion.</p>
+          </article>
+          <article class="info-card">
+            <strong>Audience flywheel</strong>
+            <p>Content creates trust, trust drives curated drops, drops generate proof, and proof deepens content.</p>
+          </article>
+          <article class="info-card">
+            <strong>Monetization stack</strong>
+            <p>Collections first, then membership, collaborations, selective licensing, and retail partnerships.</p>
+          </article>
+          <article class="info-card">
+            <strong>Current gap</strong>
+            <p>The concept is investable as a story, but the financial and deck materials still need real build-out.</p>
+          </article>
+        </div>
+        <p style="margin-top: 18px;">
+          What makes the thesis defendable is not just travel content. It is the combination of curation taste, textile
+          expertise, supplier fluency, and an ability to turn those into premium, place-led collections. The long-term
+          value is not merely product margin. It is brand trust around material discovery.
+        </p>
+      </section>
+
+      <section id="commerce-build" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Commerce Build</h3>
+          </div>
+          <p>The site should feel editorial and premium, not like a rushed Shopify catalog.</p>
+        </div>
+        <p>
+          The homepage comp is strong enough to guide the build: large textile imagery, one featured collection, one artisan
+          story block, and a compact product grid. Use that as the template rather than inventing a broader navigation system.
+        </p>
+        <figure>
+          <img src="assets/images/shopify_homepage.png" alt="Ali Dandin homepage mockup with indigo textiles, artisan spotlight, and product grid.">
+          <figcaption>The best current storefront asset. Use it as the reference for hierarchy, mood, and content density.</figcaption>
+        </figure>
+        <div class="two-col" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Build now</strong>
+            <ul>
+              <li>Homepage</li>
+              <li>Kyoto Indigo collection page</li>
+              <li>Four product detail pages</li>
+              <li>Basic Passport Club capture</li>
+            </ul>
+          </article>
+          <article class="info-card">
+            <strong>Still missing as assets</strong>
+            <ul>
+              <li>Standalone collection page mockup</li>
+              <li>Standalone product page mockup</li>
+              <li>Mobile-specific UI set</li>
+              <li>Reusable component system</li>
+            </ul>
+          </article>
+        </div>
+        <div class="note-box">
+          Use the current homepage as the visual north star, but do not overfit the build to a single generated mockup.
+        </div>
+      </section>
+
+      <section id="sourcing-system" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Sourcing System</h3>
+          </div>
+          <p>The early sourcing process should optimize for authenticity, documentation, and low-regret first orders.</p>
+        </div>
+        <p>
+          Early collections should follow a simple pattern: discover, document, sample, small-batch test, then restock or
+          scale only after demand is visible. The brand should resist building a broad supplier network before it has proof
+          that the storytelling and product mix actually convert.
+        </p>
+        <figure>
+          <img src="assets/images/global_sourcing_overview.png" alt="Four-panel sourcing overview showing Italy, Turkey, India, and Japan textile artisans and workshops.">
+          <figcaption>Directional sourcing visual. Use it to frame the regional story, not to imply verified relationships.</figcaption>
+        </figure>
+        <div class="region-grid">
+          <article class="region-card">
+            <strong>Italy</strong>
+            <p>Premium linen and finishing credibility. Strong later-stage partner region.</p>
+          </article>
+          <article class="region-card">
+            <strong>Turkey</strong>
+            <p>Practical manufacturing depth for cotton, towels, throws, and scalable textile categories.</p>
+          </article>
+          <article class="region-card">
+            <strong>India</strong>
+            <p>Rich process story: block printing, handloom, cotton, and craft-forward flexibility.</p>
+          </article>
+          <article class="region-card">
+            <strong>Japan</strong>
+            <p>Hero region for indigo, heritage process, and the first premium collection story.</p>
+          </article>
+          <article class="region-card">
+            <strong>Peru</strong>
+            <p>Future expansion region for alpaca, wool, and colder-climate luxury textiles.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="mills-itinerary" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Mills &amp; Itinerary</h3>
+          </div>
+          <p>Targets from the conversation are retained here as planning inputs, not as verified active supplier intelligence.</p>
+        </div>
+        <div class="two-col">
+          <article class="info-card">
+            <strong>Unverified conversation-sourced targets</strong>
+            <ul>
+              <li>Italy: Albini Group, Canclini Tessile</li>
+              <li>Turkey: Soktas Textile, Denizli textile network</li>
+              <li>India: Arvind Mills, Anokhi workshops</li>
+              <li>Peru: Michell Group</li>
+              <li>Japan: Kuroki Mills, Kyoto heritage textile studios</li>
+            </ul>
+          </article>
+          <article class="info-card">
+            <strong>Field rule set</strong>
+            <ul>
+              <li>Document maker, process, region, and product category.</li>
+              <li>Test categories that travel and fulfill cleanly.</li>
+              <li>Start with sample orders and story capture.</li>
+              <li>Keep one lead collection per region, not a random assortment.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="timeline-grid">
+          <article class="timeline-card">
+            <strong>Italy</strong>
+            <p>Milan for context, Prato or mill districts for production, Florence for workshop and finishing references.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>Turkey</strong>
+            <p>Istanbul for markets, Denizli for textile production, supplier conversations, and sampling.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>India</strong>
+            <p>Jaipur for block print and handloom, then larger mill context via Delhi or Ahmedabad.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>Japan</strong>
+            <p>Kyoto for indigo and heritage process, Osaka or Tokyo for supplier and logistics support.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="financials" class="view-both">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-shared">Shared</span>
+            <h3>Financials &amp; Downloads</h3>
+          </div>
+          <p>The normalized business model plus the three local files that currently survive as supporting documents.</p>
+        </div>
+
+        <div class="mode-copy investor-copy">
+          <p class="lede">
+            The economic story is straightforward: use story-led textile drops to establish proof, then expand into repeat
+            collections, private label, and selective partnerships once audience trust and supply discipline are visible.
+          </p>
+        </div>
+
+        <div class="mode-copy internal-copy">
+          <p class="lede">
+            The local documents are enough to anchor the handoff, but none of them should be treated as final operating tools.
+            The next team still needs to rebuild the plan, the deck, and the model at production depth.
+          </p>
+        </div>
+
+        <div class="doc-grid">
+          <article class="doc-card">
+            <div class="doc-meta">
+              <strong>Investor Business Plan</strong>
+              <span class="pill minimal">1-page placeholder</span>
+            </div>
+            <code>assets/docs/investor_business_plan.pdf</code>
+            <p>Useful as proof that a file exists locally; not useful yet as a true investor-grade plan.</p>
+            <a class="button" href="assets/docs/investor_business_plan.pdf" download>Download PDF</a>
+          </article>
+
+          <article class="doc-card">
+            <div class="doc-meta">
+              <strong>Investor Deck</strong>
+              <span class="pill minimal">8-slide outline</span>
+            </div>
+            <code>assets/docs/investor_deck.pptx</code>
+            <p>Real structure, minimal depth. Good for framing the story; not yet a presentation-ready deck.</p>
+            <a class="button" href="assets/docs/investor_deck.pptx" download>Download PPTX</a>
+          </article>
+
+          <article class="doc-card">
+            <div class="doc-meta">
+              <strong>Financial Model</strong>
+              <span class="pill minimal">1-sheet stub</span>
+            </div>
+            <code>assets/docs/financial_model.xlsx</code>
+            <p>Short monthly table only. The eventual model still needs multi-year, multi-scenario depth.</p>
+            <a class="button" href="assets/docs/financial_model.xlsx" download>Download XLSX</a>
+          </article>
+        </div>
+
+        <div class="stats-grid">
+          <article class="note-card">
+            <strong>Revenue mix</strong>
+            <p>Collections first, then membership, collaborations, private label, and eventually licensing.</p>
+          </article>
+          <article class="note-card">
+            <strong>Margin logic</strong>
+            <p>Premium textile framing supports stronger pricing than generic travel-sourced goods.</p>
+          </article>
+          <article class="note-card">
+            <strong>Growth engine</strong>
+            <p>Content → trust → drop → repeat purchase → broader authority.</p>
+          </article>
+          <article class="note-card">
+            <strong>Current gap</strong>
+            <p>A true multi-year workbook and investor-grade long-form plan are still missing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="roadmap" class="view-investor">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-investor">Investor</span>
+            <h3>Growth Roadmap</h3>
+          </div>
+          <p>The brand becomes more valuable as it moves from discovery into authority and then into systems that scale.</p>
+        </div>
+        <div class="timeline-grid">
+          <article class="timeline-card">
+            <strong>Phase 1: Discovery brand</strong>
+            <p>Launch with destination-led textile collections, strong editorial storytelling, and a narrow assortment.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>Phase 2: Textile authority</strong>
+            <p>Repeat collections, improve supplier discipline, and introduce selective private label development.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>Phase 3: Lifestyle platform</strong>
+            <p>Expand into bedding, throws, home textiles, licensing, and prestige retail if the brand earns the right.</p>
+          </article>
+          <article class="timeline-card">
+            <strong>Strategic end state</strong>
+            <p>A trusted discovery platform with product, media, and partnership leverage around textiles and culture.</p>
+          </article>
+        </div>
+        <p style="margin-top: 18px;">
+          The long-term upside is not just selling premium goods. It is owning a point of view consumers and partners trust
+          when they want taste, provenance, and material literacy in one place.
+        </p>
+      </section>
+
+      <section id="execution" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Execution Priorities</h3>
+          </div>
+          <p>What the next team should actually do, in order, without changing the underlying asset structure.</p>
+        </div>
+        <ol>
+          <li>Export the four logo marks as standalone production files.</li>
+          <li>Turn the homepage comp into a real Shopify theme implementation.</li>
+          <li>Build Kyoto Indigo as one live collection with four products.</li>
+          <li>Create actual collection and product page screens, not just homepage direction.</li>
+          <li>Replace conceptual sourcing visuals with real maker and workshop documentation.</li>
+          <li>Rebuild the business plan, deck, and financial model at the depth originally promised.</li>
+        </ol>
+        <div class="two-col">
+          <article class="info-card">
+            <strong>Build now</strong>
+            <p>Brand exports, storefront MVP, one collection, basic email capture, and clean product storytelling.</p>
+          </article>
+          <article class="info-card">
+            <strong>Delay</strong>
+            <p>Broader categories, retail conversations, and licensing thinking until the first collection and brand system are real.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="asset-register" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Asset Register</h3>
+          </div>
+          <p>Canonical mapping between the handoff page and the actual files now stored under <code>handoff/assets</code>.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Canonical asset</th>
+                <th>Source file</th>
+                <th>Type</th>
+                <th>Section</th>
+                <th>Status</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>logo_suite</code></td>
+                <td><code>ChatGPT Image Mar 16, 2026, 09_53_25 PM.png</code></td>
+                <td>PNG</td>
+                <td>Brand Identity</td>
+                <td>present locally</td>
+                <td>Combined board only; separate mark exports still planned.</td>
+              </tr>
+              <tr>
+                <td><code>shopify_homepage</code></td>
+                <td><code>ChatGPT Image Mar 16, 2026, 09_53_45 PM.png</code></td>
+                <td>PNG</td>
+                <td>Commerce Build</td>
+                <td>present locally</td>
+                <td>Primary storefront reference.</td>
+              </tr>
+              <tr>
+                <td><code>kyoto_indigo_collection</code></td>
+                <td><code>ChatGPT Image Mar 16, 2026, 09_52_51 PM.png</code></td>
+                <td>PNG</td>
+                <td>Collection System</td>
+                <td>present locally</td>
+                <td>Strongest product-facing visual in the folder.</td>
+              </tr>
+              <tr>
+                <td><code>global_sourcing_overview</code></td>
+                <td><code>ChatGPT Image Mar 16, 2026, 09_52_45 PM.png</code></td>
+                <td>PNG</td>
+                <td>Sourcing System</td>
+                <td>present locally</td>
+                <td>Directional sourcing visual, not documentary proof.</td>
+              </tr>
+              <tr>
+                <td><code>investor_business_plan.pdf</code></td>
+                <td><code>Ali_Dandin_Investor_Business_Plan.pdf</code></td>
+                <td>PDF</td>
+                <td>Financials &amp; Downloads</td>
+                <td>present locally, minimal</td>
+                <td>One-page placeholder.</td>
+              </tr>
+              <tr>
+                <td><code>investor_deck.pptx</code></td>
+                <td><code>Ali_Dandin_Investor_Deck.pptx</code></td>
+                <td>PPTX</td>
+                <td>Financials &amp; Downloads</td>
+                <td>present locally, minimal</td>
+                <td>Eight-slide outline deck.</td>
+              </tr>
+              <tr>
+                <td><code>financial_model.xlsx</code></td>
+                <td><code>Ali_Dandin_Financial_Model.xlsx</code></td>
+                <td>XLSX</td>
+                <td>Financials &amp; Downloads</td>
+                <td>present locally, minimal</td>
+                <td>One-sheet monthly model stub.</td>
+              </tr>
+              <tr>
+                <td><code>primary_logo</code></td>
+                <td>None</td>
+                <td>Planned</td>
+                <td>Brand Identity</td>
+                <td>planned</td>
+                <td>Only exists inside the combined logo board.</td>
+              </tr>
+              <tr>
+                <td><code>collection_page_screen</code></td>
+                <td>None</td>
+                <td>Planned</td>
+                <td>Commerce Build</td>
+                <td>planned</td>
+                <td>No standalone collection screen is present locally.</td>
+              </tr>
+              <tr>
+                <td><code>product_page_screen</code></td>
+                <td>None</td>
+                <td>Planned</td>
+                <td>Commerce Build</td>
+                <td>planned</td>
+                <td>No standalone product screen is present locally.</td>
+              </tr>
+              <tr>
+                <td><code>archive/*</code></td>
+                <td><code>master_board.png</code>, <code>mixed_asset_board.png</code>, slices</td>
+                <td>PNG set</td>
+                <td>Appendix A</td>
+                <td>archive only</td>
+                <td>Preserved for traceability, not primary narrative use.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="appendix-archive" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Appendix A: Generated Asset Archive</h3>
+          </div>
+          <p>Artifacts kept for reference after the earlier oversized-board and repeat-generation loop.</p>
+        </div>
+        <details open>
+          <summary>Composite boards</summary>
+          <div class="archive-grid">
+            <figure>
+              <img src="assets/archive/master_board.png" alt="Large original composite strategy board.">
+              <figcaption><code>master_board.png</code> — original giant collage.</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/mixed_asset_board.png" alt="Composite board mixing storefront screens, sourcing, and products.">
+              <figcaption><code>mixed_asset_board.png</code> — mixed UI/product/sourcing board.</figcaption>
+            </figure>
+          </div>
+        </details>
+        <details>
+          <summary>Oversized board slices</summary>
+          <div class="archive-grid">
+            <figure>
+              <img src="assets/archive/slice_0_0.png" alt="Archive slice 0 0 from oversized composite image.">
+              <figcaption><code>slice_0_0.png</code></figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/slice_0_1.png" alt="Archive slice 0 1 from oversized composite image.">
+              <figcaption><code>slice_0_1.png</code></figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/slice_0_2.png" alt="Archive slice 0 2 from oversized composite image.">
+              <figcaption><code>slice_0_2.png</code></figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/slice_1_0.png" alt="Archive slice 1 0 from oversized composite image.">
+              <figcaption><code>slice_1_0.png</code></figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/slice_1_1.png" alt="Archive slice 1 1 from oversized composite image.">
+              <figcaption><code>slice_1_1.png</code></figcaption>
+            </figure>
+            <figure>
+              <img src="assets/archive/slice_1_2.png" alt="Archive slice 1 2 from oversized composite image.">
+              <figcaption><code>slice_1_2.png</code></figcaption>
+            </figure>
+          </div>
+        </details>
+      </section>
+
+      <section id="appendix-audit" class="view-internal">
+        <div class="section-head">
+          <div class="section-title-wrap">
+            <span class="scope-badge scope-internal">Internal</span>
+            <h3>Appendix B: Delivery Audit</h3>
+          </div>
+          <p>Short factual record of what the folder contains versus what earlier responses said existed.</p>
+        </div>
+        <ul>
+          <li>The folder now contains real local files, but the PDF, deck, and spreadsheet are still thin placeholders.</li>
+          <li>The image workflow produced both strong assets and archive clutter; this page promotes the strong assets and demotes the clutter.</li>
+          <li>The current handoff is durable because it references files that are actually present under <code>handoff/assets</code>.</li>
+          <li>What remains missing is mainly production depth: separated logo exports, deeper ecommerce screens, verified sourcing data, and real finance docs.</li>
+        </ul>
+        <p class="footer-note">
+          Built from the local project folder at <code>/Users/shawnlawyer/Desktop/ali dandin</code>. The asset structure under
+          <code>handoff/assets</code> was intentionally left intact while the page was refactored.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = Array.from(document.querySelectorAll("[data-mode-target]"));
+      const description = document.getElementById("mode-description");
+      const descriptions = {
+        investor: "Investor view emphasizes thesis, moat, growth logic, and the current strength or weakness of the support materials.",
+        internal: "Internal view emphasizes existing assets, missing production work, sourcing notes, and execution order."
+      };
+
+      function setMode(mode) {
+        root.dataset.mode = mode;
+        buttons.forEach((button) => {
+          const active = button.dataset.modeTarget === mode;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", String(active));
+        });
+        if (description) {
+          description.textContent = descriptions[mode];
+        }
+        try {
+          localStorage.setItem("ali-dandin-mode", mode);
+        } catch (error) {
+          // Ignore storage failures.
+        }
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setMode(button.dataset.modeTarget));
+      });
+
+      let initialMode = "internal";
+      try {
+        const storedMode = localStorage.getItem("ali-dandin-mode");
+        if (storedMode === "investor" || storedMode === "internal") {
+          initialMode = storedMode;
+        }
+      } catch (error) {
+        // Ignore storage failures.
+      }
+
+      setMode(initialMode);
+    }());
+  </script>
+</body>
+</html>
