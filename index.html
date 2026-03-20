@@ -594,33 +594,6 @@
       overflow-wrap: anywhere;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      width: fit-content;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .present {
-      background: rgba(97, 113, 71, 0.14);
-      color: #46582d;
-    }
-
-    .planned {
-      background: rgba(30, 42, 58, 0.08);
-      color: var(--navy);
-    }
-
-    .archive {
-      background: rgba(103, 112, 122, 0.14);
-      color: #46515d;
-    }
-
     .doc-card {
       display: flex;
       flex-direction: column;
@@ -824,7 +797,6 @@
               <tr>
                 <th>Canonical asset</th>
                 <th>Type</th>
-                <th>Status</th>
                 <th>Purpose</th>
               </tr>
             </thead>
@@ -832,43 +804,36 @@
               <tr>
                 <td><code>investor_business_plan.pdf</code></td>
                 <td>PDF</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Business plan document.</td>
               </tr>
               <tr>
                 <td><code>investor_deck.pptx</code></td>
                 <td>PPTX</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Investor presentation deck.</td>
               </tr>
               <tr>
                 <td><code>financial_model.xlsx</code></td>
                 <td>XLSX</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Financial model workbook.</td>
               </tr>
               <tr>
                 <td><code>logo_suite.png</code></td>
                 <td>PNG</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Combined brand mark board.</td>
               </tr>
               <tr>
                 <td><code>shopify_homepage.png</code></td>
                 <td>PNG</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Homepage reference for the storefront direction.</td>
               </tr>
               <tr>
                 <td><code>kyoto_indigo_collection.png</code></td>
                 <td>PNG</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Hero collection board for the current assortment story.</td>
               </tr>
               <tr>
                 <td><code>global_sourcing_overview.png</code></td>
                 <td>PNG</td>
-                <td><span class="pill present">Present locally</span></td>
                 <td>Four-market sourcing visual.</td>
               </tr>
             </tbody>
@@ -1147,7 +1112,6 @@
           <article class="doc-card">
             <div class="doc-meta">
               <strong>Investor Business Plan</strong>
-              <span class="pill present">Present locally</span>
             </div>
             <code>assets/docs/investor_business_plan.pdf</code>
             <p>Business plan file covering the brand concept, market position, and commercial direction.</p>
@@ -1157,7 +1121,6 @@
           <article class="doc-card">
             <div class="doc-meta">
               <strong>Investor Deck</strong>
-              <span class="pill present">Present locally</span>
             </div>
             <code>assets/docs/investor_deck.pptx</code>
             <p>Presentation deck covering brand positioning, product direction, and growth narrative.</p>
@@ -1167,7 +1130,6 @@
           <article class="doc-card">
             <div class="doc-meta">
               <strong>Financial Model</strong>
-              <span class="pill present">Present locally</span>
             </div>
             <code>assets/docs/financial_model.xlsx</code>
             <p>Financial workbook covering revenue, cost structure, and model assumptions.</p>
