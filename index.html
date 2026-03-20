@@ -196,12 +196,6 @@
       box-shadow: 0 8px 24px rgba(30, 42, 58, 0.18);
     }
 
-    #mode-description {
-      margin-top: 12px;
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
     .toc {
       display: grid;
       gap: 8px;
@@ -752,12 +746,10 @@
       <p>Premium textile brand built around destination-led collections, editorial storytelling, and globally sourced craftsmanship.</p>
 
       <div class="mode-panel">
-        <span class="panel-label">View</span>
         <div class="mode-switch" role="tablist" aria-label="Document mode">
           <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
           <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
         </div>
-        <p id="mode-description">Internal view centers the current asset set, sourcing context, and operating picture.</p>
       </div>
 
       <nav class="toc" aria-label="Table of contents">
@@ -792,7 +784,6 @@
               and a long-term path into signature collections, private label, and selective partnerships.
             </p>
             <div class="mode-panel" style="margin-top: 18px;">
-              <span class="panel-label">Perspective</span>
               <div class="mode-switch" role="tablist" aria-label="Hero mode switch">
                 <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
                 <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
@@ -898,7 +889,7 @@
             <span class="scope-badge scope-shared">Shared</span>
             <h3>Summary</h3>
           </div>
-          <p>One brand viewed through two lenses: investor framing and operating context.</p>
+          <p>A premium textile brand defined by provenance, restraint, and destination-led curation.</p>
         </div>
 
         <div class="mode-copy investor-copy">
@@ -1437,11 +1428,6 @@
     (function () {
       const root = document.documentElement;
       const buttons = Array.from(document.querySelectorAll("[data-mode-target]"));
-      const description = document.getElementById("mode-description");
-      const descriptions = {
-        investor: "Investor view centers thesis, positioning, category logic, and growth framing.",
-        internal: "Internal view centers the current asset set, sourcing context, and operating picture."
-      };
 
       function setMode(mode) {
         root.dataset.mode = mode;
@@ -1450,9 +1436,6 @@
           button.classList.toggle("active", active);
           button.setAttribute("aria-pressed", String(active));
         });
-        if (description) {
-          description.textContent = descriptions[mode];
-        }
         try {
           localStorage.setItem("ali-dandin-mode", mode);
         } catch (error) {
