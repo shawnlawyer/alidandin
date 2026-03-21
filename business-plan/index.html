@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ali Dandin Business Plan</title>
+  <style>
+    :root {
+      --bg: #f5efe5;
+      --paper: #fffaf3;
+      --ink: #1f2a36;
+      --muted: #65707a;
+      --navy: #1e2a3a;
+      --sand: #c2a57a;
+      --sand-soft: #efe1cb;
+      --terracotta: #b96939;
+      --olive: #617147;
+      --line: rgba(30, 42, 58, 0.12);
+      --shadow: 0 18px 48px rgba(30, 42, 58, 0.08);
+      --radius: 22px;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      line-height: 1.65;
+      background:
+        radial-gradient(circle at top left, rgba(194, 165, 122, 0.16), transparent 24%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 100%);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border-radius: 18px;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(calc(100% - 36px), 1360px);
+      margin: 0 auto;
+      padding: 28px 0 80px;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    aside {
+      position: sticky;
+      top: 20px;
+      align-self: start;
+      padding: 24px 22px;
+      border-radius: var(--radius);
+      background: rgba(255, 250, 243, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+    }
+
+    .mark {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(194, 165, 122, 0.95), rgba(30, 42, 58, 0.95));
+      color: #fffaf3;
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
+
+    .kicker {
+      margin: 0 0 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--sand);
+    }
+
+    aside h1 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      line-height: 1.2;
+    }
+
+    aside p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .toc {
+      display: grid;
+      gap: 8px;
+    }
+
+    .toc a {
+      text-decoration: none;
+      padding: 9px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border-color 0.2s ease;
+      font-size: 0.94rem;
+    }
+
+    .toc a:hover,
+    .toc a:focus-visible {
+      background: rgba(194, 165, 122, 0.12);
+      border-color: rgba(194, 165, 122, 0.3);
+      outline: none;
+    }
+
+    .meta {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      font-size: 0.87rem;
+      color: var(--muted);
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    section {
+      margin-bottom: 26px;
+      padding: 34px;
+      border-radius: var(--radius);
+      background: rgba(255, 250, 243, 0.94);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      scroll-margin-top: 18px;
+    }
+
+    .hero {
+      color: #f7f3ed;
+      background:
+        linear-gradient(135deg, rgba(20, 31, 44, 0.98), rgba(31, 47, 66, 0.94)),
+        linear-gradient(180deg, rgba(194, 165, 122, 0.18), transparent);
+      overflow: hidden;
+    }
+
+    .hero-grid,
+    .two-col,
+    .three-col,
+    .metrics-grid,
+    .risk-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero-grid,
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three-col,
+    .metrics-grid,
+    .risk-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .eyebrow {
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.74rem;
+      color: rgba(247, 243, 237, 0.76);
+      font-weight: 700;
+    }
+
+    h2,
+    h3 {
+      font-family: var(--serif);
+      line-height: 1.1;
+    }
+
+    .hero h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      max-width: 10ch;
+    }
+
+    .hero p {
+      color: rgba(247, 243, 237, 0.88);
+      font-size: 1.02rem;
+      max-width: 62ch;
+    }
+
+    .hero-card,
+    .note-card,
+    .info-card,
+    .metric-card,
+    .risk-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 243, 0.72);
+      padding: 20px;
+    }
+
+    .hero-card {
+      background: rgba(255, 250, 243, 0.08);
+      border-color: rgba(255, 250, 243, 0.14);
+    }
+
+    .hero-card strong,
+    .metric-card strong,
+    .info-card strong,
+    .risk-card strong,
+    .note-card strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h3 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 34ch;
+      text-align: right;
+      color: var(--muted);
+    }
+
+    .lede {
+      font-size: 1.08rem;
+      color: var(--navy);
+    }
+
+    .figure-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    figcaption {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.2rem;
+    }
+
+    li + li {
+      margin-top: 0.36rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+    }
+
+    .note-row {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--navy);
+      color: #fffaf3;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--navy);
+      border-color: rgba(30, 42, 58, 0.18);
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .small {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1120px) {
+      .page {
+        width: min(calc(100% - 24px), 1020px);
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 760px) {
+      section,
+      .hero {
+        padding: 26px 20px;
+      }
+
+      .hero-grid,
+      .two-col,
+      .three-col,
+      .metrics-grid,
+      .risk-grid,
+      .note-row {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        text-align: left;
+        margin-top: 10px;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        width: 100%;
+        display: block;
+        padding: 0;
+      }
+
+      aside {
+        display: none;
+      }
+
+      section {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        page-break-inside: avoid;
+      }
+
+      .button {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <aside>
+      <div class="mark">AD</div>
+      <p class="kicker">Ali Dandin</p>
+      <h1>Business Plan</h1>
+      <p>Premium textile brand built around destination-led collections, sourcing discipline, and editorial commerce.</p>
+
+      <nav class="toc" aria-label="Table of contents">
+        <a href="#executive-summary">Executive Summary</a>
+        <a href="#company-overview">Company Overview</a>
+        <a href="#market-opportunity">Market Opportunity</a>
+        <a href="#brand-positioning">Brand Positioning</a>
+        <a href="#product-strategy">Product Strategy</a>
+        <a href="#business-model">Business Model</a>
+        <a href="#go-to-market">Go-To-Market Strategy</a>
+        <a href="#operations">Operations &amp; Sourcing</a>
+        <a href="#commerce-platform">Commerce Platform</a>
+        <a href="#financial-plan">Financial Plan</a>
+        <a href="#growth-roadmap">Growth Roadmap</a>
+        <a href="#risk-management">Risk Management</a>
+        <a href="#capital-strategy">Capital Strategy</a>
+      </nav>
+
+      <div class="meta">
+        <div><strong>Category</strong><br>Premium textiles</div>
+        <div><strong>Launch thesis</strong><br>Destination-led curation</div>
+        <div><strong>Hero collection</strong><br>Kyoto Indigo</div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" id="executive-summary">
+        <div class="eyebrow">Ali Dandin business plan</div>
+        <div class="hero-grid">
+          <div>
+            <h2>Ali Dandin premium textiles</h2>
+            <p>
+              Ali Dandin is a textile-led discovery brand centered on provenance, material intelligence, and destination-led
+              collections. The business combines premium product curation, editorial storytelling, and direct-to-consumer
+              commerce into a brand that can expand from curated drops into signature lines, private label, and selective partnerships.
+            </p>
+            <p>
+              The strategic edge comes from Ali’s textile background. The brand is not built on generic travel commerce or
+              broad marketplace aggregation. It is built on judgment: knowing what materials are worth backing, where the
+              strongest processes live, how to source responsibly, and how to translate that into a premium product and brand narrative.
+            </p>
+            <div class="footer-actions">
+              <a class="button primary" href="../index.html">Back to Brand Site</a>
+              <a class="button secondary" href="#capital-strategy">View Capital Strategy</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <strong>Executive summary</strong>
+            <p>
+              Ali Dandin enters the market as a premium textile brand with a clear point of view: one destination-led
+              collection at a time, one strong material story at a time, and one editorially coherent storefront that
+              makes the brand feel specific rather than mass.
+            </p>
+            <p>
+              The opening collection, Kyoto Indigo, establishes the commercial pattern. Every product is linked to process,
+              material, and origin. Each launch becomes both merchandise and media. Over time, that model supports stronger
+              margins, repeat collections, private label development, and prestige partnerships.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="company-overview">
+        <div class="section-head">
+          <h3>Company Overview</h3>
+          <p>Ali Dandin is built as a modern textile house rather than a generic lifestyle marketplace.</p>
+        </div>
+        <div class="two-col">
+          <div>
+            <p class="lede">
+              The company exists to bring culturally rooted textile products to market through a premium brand system that
+              combines sourcing, design judgment, and editorial storytelling.
+            </p>
+            <p>
+              The brand’s long-term ambition is to become the world’s most trusted textile discovery platform. That ambition
+              starts narrowly. The first phase is not a broad assortment of travel goods. It is a focused product and brand
+              architecture in which textiles lead every decision: category selection, supplier relationships, visual language,
+              pricing, and channel strategy.
+            </p>
+          </div>
+          <div class="note-card">
+            <strong>Core identity</strong>
+            <ul>
+              <li>Premium textile brand with global sourcing roots</li>
+              <li>Destination-led collections rather than commodity catalog SKUs</li>
+              <li>Editorial brand voice anchored in material literacy and provenance</li>
+              <li>Direct-to-consumer first, with later retail and partnership expansion</li>
+            </ul>
+          </div>
+        </div>
+        <div class="metrics-grid" style="margin-top: 18px;">
+          <article class="metric-card">
+            <strong>Mission</strong>
+            <p>Bring exceptional textile products from distinctive places into a coherent premium brand world.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Vision</strong>
+            <p>Become the leading authority in premium, globally sourced textile discovery and curation.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Position</strong>
+            <p>A category-defining textile brand with strong product margins and durable storytelling power.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="market-opportunity">
+        <div class="section-head">
+          <h3>Market Opportunity</h3>
+          <p>Consumers increasingly want products with origin, craft, and taste embedded in them.</p>
+        </div>
+        <p>
+          The market opportunity sits at the overlap of premium home textiles, artisanal product commerce, and content-led
+          direct-to-consumer brands. Many existing players compete on breadth, convenience, or trend turnover. Few own a
+          defensible position around material literacy and destination-led curation. Ali Dandin fills that gap.
+        </p>
+        <div class="three-col" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Consumer demand</strong>
+            <p>Buyers in premium home and lifestyle categories respond to provenance, texture, design taste, and perceived authenticity.</p>
+          </article>
+          <article class="info-card">
+            <strong>Category economics</strong>
+            <p>Textiles support healthy price architecture, repeat purchasing behavior, and later private label margin expansion.</p>
+          </article>
+          <article class="info-card">
+            <strong>Brand whitespace</strong>
+            <p>There is room for a brand that feels globally literate and editorial without becoming bohemian or mass-premium.</p>
+          </article>
+        </div>
+        <div class="note-row">
+          <article class="note-card">
+            <strong>Target customer</strong>
+            <p>
+              Design-conscious consumers, specialty gift buyers, home-oriented professionals, and culturally curious shoppers
+              who want products that signal taste and origin rather than trend-chasing.
+            </p>
+          </article>
+          <article class="note-card">
+            <strong>Competitive set</strong>
+            <p>
+              The real comparison set includes premium home brands, artisanal marketplaces, and content-led commerce brands,
+              but the strongest differentiation comes from specializing in textiles rather than operating as a general store.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="brand-positioning">
+        <div class="section-head">
+          <h3>Brand Positioning</h3>
+          <p>Ali Dandin is positioned as a specialized authority in premium textiles.</p>
+        </div>
+        <div class="two-col">
+          <div class="figure-stack">
+            <img src="../assets/images/logo_suite.png" alt="Ali Dandin logo suite showing primary mark, monogram, passport stamp, and textile globe.">
+            <figcaption>The identity system establishes a calm, exacting, editorially premium brand voice.</figcaption>
+          </div>
+          <div>
+            <p>
+              The brand tone is precise, restrained, and materially intelligent. It does not read as a souvenir shop, creator
+              merch label, or broad travel lifestyle project. It reads as a textile house with global reach.
+            </p>
+            <ul>
+              <li>Primary message: premium textiles shaped by place, process, and curation</li>
+              <li>Visual system: midnight blue, sand, cream, with terracotta and olive used sparingly</li>
+              <li>Voice: editorial, calm, informed, and culturally literate</li>
+              <li>Brand symbols: primary mark, AD monogram, passport stamp, textile globe</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="product-strategy">
+        <div class="section-head">
+          <h3>Product Strategy</h3>
+          <p>The opening collection demonstrates the company’s commercial and aesthetic logic in one move.</p>
+        </div>
+        <div class="two-col">
+          <div>
+            <p class="lede">
+              Kyoto Indigo serves as the opening collection because it combines material clarity, process depth, and strong
+              cultural association in a way that translates cleanly into product, imagery, and story.
+            </p>
+            <p>
+              The launch assortment should stay narrow. A small, disciplined range creates better merchandising, better
+              storytelling, and better operational control than a broad assortment. Each item should earn its place by
+              expressing the same destination story in a different use case.
+            </p>
+            <ul>
+              <li>Indigo Linen Throw</li>
+              <li>Indigo Scarf</li>
+              <li>Indigo Pillow</li>
+              <li>Indigo Textile Set</li>
+            </ul>
+          </div>
+          <div class="figure-stack">
+            <img src="../assets/images/kyoto_indigo_collection.png" alt="Kyoto Indigo collection board with throw, scarf, pillow, and textile set.">
+            <figcaption>Kyoto Indigo establishes the first complete product story: material, process, place, and use.</figcaption>
+          </div>
+        </div>
+        <div class="three-col" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Category ladder</strong>
+            <p>Throws, scarves, pillows, table linens, and textile accessories create the first scalable product ladder.</p>
+          </article>
+          <article class="info-card">
+            <strong>Pricing logic</strong>
+            <p>Premium pricing is supported by provenance, material quality, and a curated release structure rather than commodity comparison.</p>
+          </article>
+          <article class="info-card">
+            <strong>Expansion path</strong>
+            <p>Over time the range extends into bedding, signature linens, seasonal collections, and selective private label programs.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="business-model">
+        <div class="section-head">
+          <h3>Business Model</h3>
+          <p>The company monetizes product first, then layers in recurring and higher-margin revenue streams.</p>
+        </div>
+        <div class="metrics-grid">
+          <article class="metric-card">
+            <strong>Primary revenue</strong>
+            <p>Direct-to-consumer sales of destination-led textile collections.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Secondary revenue</strong>
+            <p>Membership, collaborations, affiliate income, and later selective licensing.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Long-term revenue</strong>
+            <p>Private label lines, retail partnerships, and prestige distribution.</p>
+          </article>
+        </div>
+        <div class="note-row">
+          <article class="note-card">
+            <strong>Why the model works</strong>
+            <p>
+              Product margin improves when the brand owns both curation and customer trust. A clear point of view allows the
+              company to price above generic travel-sourced goods and avoid competing on breadth or discounting.
+            </p>
+          </article>
+          <article class="note-card">
+            <strong>Monetization sequence</strong>
+            <p>
+              Collections establish the brand. Membership deepens customer ownership. Private label increases margin. Partnerships
+              and licensing extend reach without requiring the brand to become operationally indiscriminate.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="go-to-market">
+        <div class="section-head">
+          <h3>Go-To-Market Strategy</h3>
+          <p>The go-to-market model uses content and commerce as a single system rather than separate channels.</p>
+        </div>
+        <p>
+          The customer acquisition model begins with story: the destination, the material, the maker, and the product. That
+          story is then translated into an editorial storefront and a tightly curated release calendar. The launch strategy
+          should prioritize clarity over volume. One strong collection, one strong visual system, and one coherent narrative
+          outperform a scattered multi-category debut.
+        </p>
+        <div class="three-col" style="margin-top: 18px;">
+          <article class="info-card">
+            <strong>Primary channels</strong>
+            <p>Shopify storefront, Instagram, short-form video, email capture, and editorial brand content.</p>
+          </article>
+          <article class="info-card">
+            <strong>Audience growth</strong>
+            <p>Content builds trust; trust lifts conversion; launches create momentum; repeat launches deepen authority.</p>
+          </article>
+          <article class="info-card">
+            <strong>Marketing posture</strong>
+            <p>Brand-building content, maker stories, destination context, and product education rather than heavy discount-led performance tactics.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="operations">
+        <div class="section-head">
+          <h3>Operations &amp; Sourcing</h3>
+          <p>The sourcing system is designed around authenticity, documentation, and controlled batch size.</p>
+        </div>
+        <div class="two-col">
+          <div>
+            <p>
+              The operating model begins with direct sourcing and disciplined assortment. The brand identifies regions with
+              strong textile credibility, documents the process behind the product, evaluates shipping and durability, and
+              then scales only the products that hold both brand value and operational feasibility.
+            </p>
+            <ul>
+              <li>Document maker, process, region, and material details</li>
+              <li>Favor products that travel, store, and fulfill cleanly</li>
+              <li>Test categories through disciplined small-batch releases</li>
+              <li>Move from curation toward repeatable supplier relationships over time</li>
+            </ul>
+          </div>
+          <div class="figure-stack">
+            <img src="../assets/images/global_sourcing_overview.png" alt="Global sourcing overview of textile regions including Italy, Turkey, India, and Japan.">
+            <figcaption>Core sourcing regions support different material strengths and different brand stories.</figcaption>
+          </div>
+        </div>
+        <div class="table-wrap" style="margin-top: 18px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Region</th>
+                <th>Strategic role</th>
+                <th>Priority categories</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Japan</td>
+                <td>Hero collection region for indigo, heritage processes, and first-brand authority</td>
+                <td>Throws, scarves, small textile accessories</td>
+              </tr>
+              <tr>
+                <td>India</td>
+                <td>Craft process depth and flexible category expansion</td>
+                <td>Block print textiles, table linens, cotton accessories</td>
+              </tr>
+              <tr>
+                <td>Turkey</td>
+                <td>Scalable production for cotton and home textile categories</td>
+                <td>Towels, throws, woven goods, foundational textile lines</td>
+              </tr>
+              <tr>
+                <td>Italy</td>
+                <td>Later-stage premium finishing and luxury textile credibility</td>
+                <td>Linen, elevated table linens, prestige home textiles</td>
+              </tr>
+              <tr>
+                <td>Peru</td>
+                <td>Future luxury expansion for fiber-led cold-weather categories</td>
+                <td>Alpaca, wool, blankets, winter-weight textiles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="commerce-platform">
+        <div class="section-head">
+          <h3>Commerce Platform</h3>
+          <p>The storefront should feel editorial, premium, and collection-led rather than catalog-heavy.</p>
+        </div>
+        <div class="two-col">
+          <div class="figure-stack">
+            <img src="../assets/images/shopify_homepage.png" alt="Ali Dandin homepage mockup showing featured collection, artisan story, and product grid.">
+            <figcaption>The homepage establishes the correct hierarchy: collection first, story second, product grid third.</figcaption>
+          </div>
+          <div>
+            <p>
+              The commerce platform should present one clear featured collection, one supporting artisan or process story,
+              and one disciplined product grid. That hierarchy protects the premium position and prevents the site from
+              becoming visually noisy or operationally scattered.
+            </p>
+            <ul>
+              <li>Homepage anchored by one featured collection</li>
+              <li>Collection pages organized by destination and product family</li>
+              <li>Product pages structured around material, process, and origin</li>
+              <li>Email capture and membership integrated without overwhelming the brand experience</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="financial-plan">
+        <div class="section-head">
+          <h3>Financial Plan</h3>
+          <p>The planning model assumes a premium price architecture and disciplined collection growth.</p>
+        </div>
+        <p>
+          The most sensible financial case for Ali Dandin starts with a narrow assortment, premium average selling prices,
+          and a content-driven acquisition engine. The following three-year planning case is directional and should be
+          refined into a deeper workbook, but it provides a coherent growth path for the business.
+        </p>
+        <div class="table-wrap" style="margin-top: 18px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Year 1</th>
+                <th>Year 2</th>
+                <th>Year 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Audience size</td>
+                <td>50,000</td>
+                <td>250,000</td>
+                <td>1,000,000</td>
+              </tr>
+              <tr>
+                <td>Collections launched</td>
+                <td>4</td>
+                <td>8</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td>Average selling price</td>
+                <td>$65</td>
+                <td>$70</td>
+                <td>$72</td>
+              </tr>
+              <tr>
+                <td>Product revenue</td>
+                <td>$650,000</td>
+                <td>$2,800,000</td>
+                <td>$6,912,000</td>
+              </tr>
+              <tr>
+                <td>Membership + partnerships</td>
+                <td>$176,000</td>
+                <td>$800,000</td>
+                <td>$2,440,000</td>
+              </tr>
+              <tr>
+                <td>Total revenue</td>
+                <td>$826,000</td>
+                <td>$3,600,000</td>
+                <td>$9,352,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="metrics-grid" style="margin-top: 18px;">
+          <article class="metric-card">
+            <strong>Gross margin target</strong>
+            <p>55% to 65% blended margin through curated premium positioning and later private label improvements.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Operating spend</strong>
+            <p>Primary spend categories include travel, team, content production, fulfillment, packaging, and paid amplification.</p>
+          </article>
+          <article class="metric-card">
+            <strong>Capital efficiency</strong>
+            <p>Small-batch collection logic reduces early inventory exposure while preserving brand specificity.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="growth-roadmap">
+        <div class="section-head">
+          <h3>Growth Roadmap</h3>
+          <p>The business scales in three clean phases: discovery, authority, and lifestyle expansion.</p>
+        </div>
+        <div class="three-col">
+          <article class="info-card">
+            <strong>Phase 1: Discovery brand</strong>
+            <p>Establish authority through tightly curated launches, strong brand imagery, and one destination-led collection at a time.</p>
+          </article>
+          <article class="info-card">
+            <strong>Phase 2: Textile authority</strong>
+            <p>Introduce repeatable collections, deepen supplier relationships, and develop signature private label categories.</p>
+          </article>
+          <article class="info-card">
+            <strong>Phase 3: Lifestyle expansion</strong>
+            <p>Extend into bedding, table linens, broader home textiles, selective licensing, and prestige retail partnerships.</p>
+          </article>
+        </div>
+        <div class="note-row">
+          <article class="note-card">
+            <strong>Strategic end state</strong>
+            <p>
+              A high-trust discovery platform that monetizes through product, partnerships, and distribution leverage while
+              retaining its core identity as a premium textile authority.
+            </p>
+          </article>
+          <article class="note-card">
+            <strong>Enterprise value logic</strong>
+            <p>
+              The brand becomes more valuable as it owns repeatable design language, higher-margin proprietary products, and
+              a customer relationship that extends beyond one-off drops.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="risk-management">
+        <div class="section-head">
+          <h3>Risk Management</h3>
+          <p>The strongest early risks are concentration risk, supplier variability, and over-expansion.</p>
+        </div>
+        <div class="risk-grid">
+          <article class="risk-card">
+            <strong>Brand concentration risk</strong>
+            <p>If the brand becomes too dependent on personality without building product authority, it weakens long-term value.</p>
+          </article>
+          <article class="risk-card">
+            <strong>Supply variability</strong>
+            <p>Artisan and regional production can vary in consistency, lead time, and scale. The business must expand methodically.</p>
+          </article>
+          <article class="risk-card">
+            <strong>Assortment drift</strong>
+            <p>Moving too quickly into broad categories can dilute the brand before the textile thesis fully hardens.</p>
+          </article>
+        </div>
+        <div class="note-row">
+          <article class="note-card">
+            <strong>Mitigation</strong>
+            <ul>
+              <li>Protect the textile-first positioning</li>
+              <li>Grow through repeatable supplier systems</li>
+              <li>Use small-batch launches to validate demand</li>
+              <li>Maintain disciplined category expansion</li>
+            </ul>
+          </article>
+          <article class="note-card">
+            <strong>Governance principle</strong>
+            <p>
+              Every new collection, region, or partnership should reinforce the brand’s authority in premium textiles rather
+              than distract from it.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="capital-strategy">
+        <div class="section-head">
+          <h3>Capital Strategy</h3>
+          <p>The company is well suited to a staged capital path that preserves control early and invites growth capital later.</p>
+        </div>
+        <div class="two-col">
+          <div>
+            <p>
+              The most rational funding path starts with a controlled launch funded through founder capital, early product
+              revenue, and limited preorder or membership support. Once the brand demonstrates audience traction, collection
+              sell-through, and credible supplier relationships, outside capital becomes more attractive and less dilutive.
+            </p>
+            <p>
+              A later angel or seed round would support inventory scale, team build-out, richer content production, deeper
+              supplier management, and the move from curated discovery into signature private label lines.
+            </p>
+          </div>
+          <div class="note-card">
+            <strong>Illustrative use of funds</strong>
+            <ul>
+              <li>Product development and inventory buys</li>
+              <li>Travel and sourcing costs</li>
+              <li>Brand and content production</li>
+              <li>Ecommerce operations and fulfillment</li>
+              <li>Selective team build-out across design, operations, and growth</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-actions">
+          <a class="button primary" href="../index.html#financials">Return to Documents</a>
+          <a class="button secondary" href="../assets/docs/investor_deck.pptx">Open Investor Deck</a>
+        </div>
+        <p class="small">
+          This business plan is based on the current Ali Dandin brand direction, product architecture, sourcing framework,
+          and planning assumptions reflected across the live site and supporting materials.
+        </p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
