@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-mode="internal">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ali Dandin Global Discovery Commerce Brand</title>
+  <title>Ali Dandin Premium Textiles</title>
   <style>
     :root {
       --bg: #f3ecdf;
@@ -64,29 +64,6 @@
       gap: 28px;
     }
 
-    .view-investor,
-    .view-internal,
-    .view-both {
-      min-width: 0;
-    }
-
-    html[data-mode="investor"] .view-internal {
-      display: none !important;
-    }
-
-    html[data-mode="internal"] .view-investor {
-      display: none !important;
-    }
-
-    .mode-copy {
-      display: none;
-    }
-
-    html[data-mode="investor"] .mode-copy.investor-copy,
-    html[data-mode="internal"] .mode-copy.internal-copy {
-      display: block;
-    }
-
     aside {
       position: sticky;
       top: 18px;
@@ -142,58 +119,6 @@
       margin: 0;
       color: var(--muted);
       font-size: 0.94rem;
-    }
-
-    .mode-panel {
-      padding: 16px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(30, 42, 58, 0.05), rgba(194, 165, 122, 0.08));
-      border: 1px solid var(--line);
-      margin-bottom: 18px;
-    }
-
-    .panel-label {
-      display: block;
-      margin-bottom: 10px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-    }
-
-    .mode-switch {
-      display: inline-flex;
-      gap: 6px;
-      padding: 5px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid var(--line);
-    }
-
-    .mode-button {
-      appearance: none;
-      border: 0;
-      border-radius: 999px;
-      padding: 9px 14px;
-      background: transparent;
-      color: var(--navy-soft);
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-
-    .mode-button:hover,
-    .mode-button:focus-visible {
-      background: rgba(30, 42, 58, 0.08);
-      outline: none;
-    }
-
-    .mode-button.active {
-      background: var(--navy);
-      color: #fffaf3;
-      box-shadow: 0 8px 24px rgba(30, 42, 58, 0.18);
     }
 
     .toc {
@@ -324,25 +249,6 @@
       margin: 0 0 14px;
     }
 
-    .hero .mode-panel {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.14);
-    }
-
-    .hero .mode-button {
-      color: rgba(247, 244, 238, 0.82);
-    }
-
-    .hero .mode-button:hover,
-    .hero .mode-button:focus-visible {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .hero .mode-button.active {
-      background: rgba(255, 250, 243, 0.96);
-      color: var(--navy);
-    }
-
     .hero-sidecard {
       position: relative;
       z-index: 1;
@@ -439,32 +345,6 @@
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-    }
-
-    .scope-badge {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 700;
-    }
-
-    .scope-shared {
-      background: rgba(194, 165, 122, 0.14);
-      color: #785d37;
-    }
-
-    .scope-investor {
-      background: rgba(30, 42, 58, 0.09);
-      color: var(--navy);
-    }
-
-    .scope-internal {
-      background: rgba(97, 113, 71, 0.12);
-      color: #4f6034;
     }
 
     .lede {
@@ -708,36 +588,29 @@
         <div class="mark">AD</div>
         <div>
           <p class="sidebar-kicker">Ali Dandin</p>
-          <h1>Brand Overview</h1>
+          <h1>Premium Textiles</h1>
         </div>
       </div>
       <p>Premium textile brand built around destination-led collections, editorial storytelling, and globally sourced craftsmanship.</p>
 
-      <div class="mode-panel">
-        <div class="mode-switch" role="tablist" aria-label="Document mode">
-          <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
-          <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
-        </div>
-      </div>
-
       <nav class="toc" aria-label="Table of contents">
-        <a class="view-both" href="#hero">Overview</a>
-        <a class="view-both" href="#file-index">File Index</a>
-        <a class="view-both" href="#summary">Summary</a>
-        <a class="view-both" href="#brand-identity">Brand Identity</a>
-        <a class="view-both" href="#product-system">Collection System</a>
-        <a class="view-investor" href="#investment-case">Investment Case</a>
-        <a class="view-internal" href="#commerce-build">Commerce Platform</a>
-        <a class="view-internal" href="#sourcing-system">Sourcing Model</a>
-        <a class="view-internal" href="#mills-itinerary">Sourcing Network</a>
-        <a class="view-both" href="#financials">Financials &amp; Downloads</a>
-        <a class="view-investor" href="#roadmap">Growth Roadmap</a>
+        <a href="#hero">Overview</a>
+        <a href="#file-index">Documents</a>
+        <a href="#summary">Brand Thesis</a>
+        <a href="#brand-identity">Brand Identity</a>
+        <a href="#product-system">Collection Architecture</a>
+        <a href="#investment-case">Investment Case</a>
+        <a href="#commerce-build">Commerce Platform</a>
+        <a href="#sourcing-system">Sourcing Strategy</a>
+        <a href="#mills-itinerary">Regional Network</a>
+        <a href="#financials">Financials</a>
+        <a href="#roadmap">Growth Roadmap</a>
       </nav>
 
     </aside>
 
     <main>
-      <section id="hero" class="hero view-both">
+      <section id="hero" class="hero">
         <div class="eyebrow">Textile-led global discovery brand</div>
         <div class="hero-grid">
           <div>
@@ -749,12 +622,6 @@
               The brand centers tightly curated textile drops, authority through craftsmanship and sourcing discipline,
               and a long-term path into signature collections, private label, and selective partnerships.
             </p>
-            <div class="mode-panel" style="margin-top: 18px;">
-              <div class="mode-switch" role="tablist" aria-label="Hero mode switch">
-                <button class="mode-button" type="button" data-mode-target="investor" aria-pressed="false">Investor</button>
-                <button class="mode-button" type="button" data-mode-target="internal" aria-pressed="true">Internal</button>
-              </div>
-            </div>
           </div>
           <div class="hero-sidecard">
             <h3>Brand pillars</h3>
@@ -767,21 +634,21 @@
         </div>
         <div class="status-grid">
           <div class="status-card">
-            <strong>4 core visuals</strong>
-            <span>Logo suite, homepage concept, Kyoto Indigo board, and sourcing visual.</span>
+            <strong>Category position</strong>
+            <span>A premium textile brand with a focused point of view in global discovery commerce.</span>
           </div>
           <div class="status-card">
-            <strong>3 supporting docs</strong>
-            <span>Plan, deck, and model support the business, financial, and fundraising narrative.</span>
+            <strong>Revenue model</strong>
+            <span>Collections, membership, private label, collaborations, and selective licensing.</span>
           </div>
           <div class="status-card">
-            <strong>1 canonical direction</strong>
-            <span>Textiles lead; travel and storytelling reinforce the brand.</span>
+            <strong>Scale path</strong>
+            <span>Discovery brand to textile authority to broader lifestyle expansion.</span>
           </div>
         </div>
       </section>
 
-      <section id="file-index" class="view-both">
+      <section id="file-index">
         <div class="section-head">
           <div>
             <div class="section-title-wrap">
@@ -816,11 +683,10 @@
         </div>
       </section>
 
-      <section id="summary" class="view-both">
+      <section id="summary">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-shared">Shared</span>
-            <h3>Summary</h3>
+            <h3>Brand Thesis</h3>
           </div>
           <p>Ali Dandin defines a focused position in global textile commerce.</p>
         </div>
@@ -843,10 +709,9 @@
         </div>
       </section>
 
-      <section id="brand-identity" class="view-both">
+      <section id="brand-identity">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-shared">Shared</span>
             <h3>Brand Identity</h3>
           </div>
           <p>The visual and verbal frame is premium, traveled, and materially literate rather than trendy or souvenir-led.</p>
@@ -880,11 +745,10 @@
         </div>
       </section>
 
-      <section id="product-system" class="view-both">
+      <section id="product-system">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-shared">Shared</span>
-            <h3>Collection System</h3>
+            <h3>Collection Architecture</h3>
           </div>
           <p>A single destination collection creates more coherence than a wide, mixed catalog.</p>
         </div>
@@ -917,10 +781,9 @@
         </div>
       </section>
 
-      <section id="investment-case" class="view-investor">
+      <section id="investment-case">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-investor">Investor</span>
             <h3>Investment Case</h3>
           </div>
           <p>Ali Dandin is positioned as a specialized authority in premium textiles.</p>
@@ -946,13 +809,12 @@
         </p>
       </section>
 
-      <section id="commerce-build" class="view-internal">
+      <section id="commerce-build">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-internal">Internal</span>
             <h3>Commerce Platform</h3>
           </div>
-          <p>The storefront language is editorial and premium rather than broad catalog commerce.</p>
+          <p>The storefront translates destination-led collections into premium ecommerce with clear hierarchy and premium conversion logic.</p>
         </div>
         <p>
           The homepage comp establishes the current storefront language: large textile imagery, one featured collection,
@@ -974,13 +836,12 @@
         </div>
       </section>
 
-      <section id="sourcing-system" class="view-internal">
+      <section id="sourcing-system">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-internal">Internal</span>
-            <h3>Sourcing Model</h3>
+            <h3>Sourcing Strategy</h3>
           </div>
-          <p>The sourcing model is strongest when authenticity, documentation, and small-batch discipline stay visible.</p>
+          <p>The sourcing system reinforces both product quality and brand credibility through regional expertise and disciplined assortment.</p>
         </div>
         <p>
           The sourcing logic in the material is consistent: discovery, documentation, sample orders, and repeatability only
@@ -1013,11 +874,10 @@
         </div>
       </section>
 
-      <section id="mills-itinerary" class="view-internal">
+      <section id="mills-itinerary">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-internal">Internal</span>
-            <h3>Sourcing Network</h3>
+            <h3>Regional Network</h3>
           </div>
         </div>
         <div class="two-col">
@@ -1061,27 +921,17 @@
         </div>
       </section>
 
-      <section id="financials" class="view-both">
+      <section id="financials">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-shared">Shared</span>
-            <h3>Financials &amp; Downloads</h3>
+            <h3>Financials</h3>
           </div>
-          <p>Business model summary plus the current plan, deck, and model files.</p>
+          <p>Revenue mix, margin logic, and the core planning documents behind the Ali Dandin brand case.</p>
         </div>
-
-        <div class="mode-copy investor-copy">
-          <p class="lede">
-            The economic story is straightforward: use story-led textile drops to establish proof, then expand into repeat
-            collections, private label, and selective partnerships once audience trust and supply discipline are visible.
-          </p>
-        </div>
-
-        <div class="mode-copy internal-copy">
-          <p class="lede">
-            The materials outline the business model, financial structure, and growth strategy.
-          </p>
-        </div>
+        <p class="lede">
+          The economic story is straightforward: premium textile collections establish proof, repeat launches deepen authority,
+          and the brand expands into private label, membership, partnerships, and selective licensing as trust compounds.
+        </p>
 
         <div class="doc-grid">
           <article class="doc-card">
@@ -1128,10 +978,9 @@
         </div>
       </section>
 
-      <section id="roadmap" class="view-investor">
+      <section id="roadmap">
         <div class="section-head">
           <div class="section-title-wrap">
-            <span class="scope-badge scope-investor">Investor</span>
             <h3>Growth Roadmap</h3>
           </div>
           <p>The brand scales from discovery into authority and into systems that support long-term growth.</p>
@@ -1162,42 +1011,5 @@
 
     </main>
   </div>
-
-  <script>
-    (function () {
-      const root = document.documentElement;
-      const buttons = Array.from(document.querySelectorAll("[data-mode-target]"));
-
-      function setMode(mode) {
-        root.dataset.mode = mode;
-        buttons.forEach((button) => {
-          const active = button.dataset.modeTarget === mode;
-          button.classList.toggle("active", active);
-          button.setAttribute("aria-pressed", String(active));
-        });
-        try {
-          localStorage.setItem("ali-dandin-mode", mode);
-        } catch (error) {
-          // Ignore storage failures.
-        }
-      }
-
-      buttons.forEach((button) => {
-        button.addEventListener("click", () => setMode(button.dataset.modeTarget));
-      });
-
-      let initialMode = "internal";
-      try {
-        const storedMode = localStorage.getItem("ali-dandin-mode");
-        if (storedMode === "investor" || storedMode === "internal") {
-          initialMode = storedMode;
-        }
-      } catch (error) {
-        // Ignore storage failures.
-      }
-
-      setMode(initialMode);
-    }());
-  </script>
 </body>
 </html>
