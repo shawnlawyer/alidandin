@@ -827,46 +827,46 @@ def build_pptx() -> None:
     add_stat_box(slide, Inches(0.75), Inches(4.45), Inches(1.7), Inches(1.0), "Kyoto Indigo", "Opening collection", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
     add_stat_box(slide, Inches(2.62), Inches(4.45), Inches(1.7), Inches(1.0), "$826K", "Year 1 revenue", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
     add_stat_box(slide, Inches(4.49), Inches(4.45), Inches(1.7), Inches(1.0), "55%-65%", "Gross margin", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
-    add_text(slide, Inches(0.75), Inches(6.18), Inches(5.9), Inches(0.55), "Premium textiles provide a strong foundation for margin, repeatability, and expansion into private label.", 12.5, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
+    add_text(slide, Inches(0.75), Inches(6.18), Inches(5.9), Inches(0.55), "A category with pricing power, repeatability, and room to expand into signature lines.", 12.5, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
 
-    # Thesis
+    # Market gap
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
-    add_slide_header(slide, 2, "Focused market position", "Ali Dandin operates as a textile-led discovery brand centered on provenance, material intelligence, and destination-led collections.")
-    add_bullet_card(slide, Inches(0.72), Inches(2.15), Inches(3.75), Inches(4.52), "Why textiles", [
-        "Textiles hold tactile differentiation and premium price perception.",
-        "The category supports repeat purchase more cleanly than broad travel goods.",
-        "Private label and prestige retail expansion remain credible long-term paths.",
+    add_slide_header(slide, 2, "Market gap", "Premium buyers want provenance, but current channels flatten textiles into generic product.")
+    add_bullet_card(slide, Inches(0.72), Inches(2.15), Inches(3.75), Inches(4.52), "Too much catalog", [
+        "Selection breadth overwhelms curation.",
+        "Material literacy is rarely the organizing idea.",
+        "Taste is diluted by generic marketplace structure.",
     ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(4.62), Inches(2.15), Inches(3.75), Inches(4.52), "Why Ali", [
-        "Material judgment is the moat, not generic sourcing access.",
-        "A textile background improves product quality, supplier fluency, and trust.",
-        "The brand speaks with authority rather than marketplace breadth.",
+    add_bullet_card(slide, Inches(4.62), Inches(2.15), Inches(3.75), Inches(4.52), "Premium without depth", [
+        "High-end positioning often lacks sourcing credibility.",
+        "Brand language outpaces real product authority.",
+        "Few players own a clear textile-specific point of view.",
     ], fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(8.52), Inches(2.15), Inches(4.08), Inches(4.52), "What the customer buys", [
-        "A clear point of view on textiles.",
-        "Collections that translate place and process into product.",
-        "A premium editorial storefront that turns story into commerce.",
+    add_bullet_card(slide, Inches(8.52), Inches(2.15), Inches(4.08), Inches(4.52), "Fragmented trust", [
+        "Customers lack a single trusted textile authority.",
+        "Origin, quality, and taste are hard to read quickly.",
+        "Discovery is broad, but conviction is shallow.",
     ], fill_rgb=RGBColor(0x1E, 0x2A, 0x3A), line_rgb=RGBColor(0x32, 0x43, 0x59), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
 
-    # Brand system
+    # Brand position
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
-    add_slide_header(slide, 3, "Brand system", "Ali Dandin defines a precise premium position in global textile commerce.")
+    add_slide_header(slide, 3, "Brand position", "Ali Dandin is a premium textile brand built around provenance, material intelligence, and destination-led collections.")
     add_panel(slide, Inches(0.72), Inches(2.1), Inches(5.6), Inches(4.7), fill_rgb=WHITE_RGB, line_rgb=LINE_RGB)
-    add_text(slide, Inches(0.98), Inches(2.38), Inches(4.7), Inches(0.35), "Identity system", 19, NAVY_RGB, bold=True, font_name="Georgia")
-    add_text(slide, Inches(0.98), Inches(2.82), Inches(4.9), Inches(0.95), "The identity system includes a primary mark, monogram, passport stamp, and textile globe. Midnight blue, sand, and cream establish a textile house rather than a generic lifestyle brand.", 13, MUTED_RGB)
-    add_text(slide, Inches(0.98), Inches(4.04), Inches(1.4), Inches(0.22), "Voice", 11.5, TERRACOTTA_RGB, bold=True)
+    add_text(slide, Inches(0.98), Inches(2.38), Inches(4.7), Inches(0.35), "Brand position", 19, NAVY_RGB, bold=True, font_name="Georgia")
+    add_text(slide, Inches(0.98), Inches(2.82), Inches(4.9), Inches(0.95), "The offer narrows to what is ownable: textiles, place, process, and curation. The identity system includes a primary mark, monogram, passport stamp, and textile globe.", 13, MUTED_RGB)
+    add_text(slide, Inches(0.98), Inches(4.04), Inches(1.6), Inches(0.22), "Voice", 11.5, TERRACOTTA_RGB, bold=True)
     add_text(slide, Inches(0.98), Inches(4.3), Inches(4.9), Inches(0.54), "Measured, materially intelligent, and anchored in provenance.", 12, NAVY_RGB)
-    add_text(slide, Inches(0.98), Inches(5.0), Inches(1.6), Inches(0.22), "Palette", 11.5, TERRACOTTA_RGB, bold=True)
+    add_text(slide, Inches(0.98), Inches(5.0), Inches(1.8), Inches(0.22), "Palette", 11.5, TERRACOTTA_RGB, bold=True)
     add_text(slide, Inches(0.98), Inches(5.26), Inches(4.9), Inches(0.6), "Midnight Blue · Sand · Cream · Terracotta · Olive", 12, NAVY_RGB)
     add_panel(slide, Inches(6.58), Inches(2.1), Inches(6.02), Inches(4.7), fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB)
     add_picture_contain(slide, IMAGES / "logo_suite.png", Inches(6.72), Inches(2.24), Inches(5.74), Inches(4.42))
 
-    # Collection architecture
+    # Opening collection
     slide = prs.slides.add_slide(blank)
     set_bg(slide, NAVY_RGB)
-    add_slide_header(slide, 4, "Kyoto Indigo", "Kyoto Indigo establishes the opening collection, combining material, dye process, and cultural origin into a cohesive product system.", dark=True)
+    add_slide_header(slide, 4, "Kyoto Indigo", "The opening collection defines how the brand will look, merchandise, and scale.", dark=True)
     add_panel(slide, Inches(0.72), Inches(2.08), Inches(4.15), Inches(4.76), fill_rgb=RGBColor(0x27, 0x36, 0x49), line_rgb=RGBColor(0x35, 0x47, 0x5E))
     add_picture_contain(slide, IMAGES / "kyoto_indigo_collection.png", Inches(0.86), Inches(2.22), Inches(3.87), Inches(4.48))
     add_bullet_card(slide, Inches(5.1), Inches(2.08), Inches(3.45), Inches(2.22), "Opening assortment", [
@@ -905,7 +905,7 @@ def build_pptx() -> None:
     # Sourcing network
     slide = prs.slides.add_slide(blank)
     set_bg(slide, NAVY_RGB)
-    add_slide_header(slide, 6, "Sourcing network", "Regional sourcing is both a product strategy and a brand strategy.", dark=True)
+    add_slide_header(slide, 6, "Sourcing network", "Regional sourcing supports both product depth and brand meaning.", dark=True)
     add_panel(slide, Inches(7.02), Inches(1.95), Inches(5.56), Inches(4.9), fill_rgb=RGBColor(0x27, 0x36, 0x49), line_rgb=RGBColor(0x35, 0x47, 0x5E))
     add_picture_contain(slide, IMAGES / "global_sourcing_overview.png", Inches(7.16), Inches(2.08), Inches(5.28), Inches(4.62))
     add_bullet_card(slide, Inches(0.72), Inches(1.95), Inches(5.96), Inches(1.72), "Regional priorities", [
@@ -918,14 +918,14 @@ def build_pptx() -> None:
     add_stat_box(slide, Inches(4.6), Inches(4.04), Inches(1.8), Inches(1.05), "Turkey", "Scale", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
     add_stat_box(slide, Inches(0.72), Inches(5.36), Inches(1.8), Inches(1.05), "Italy", "Finishing", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
     add_stat_box(slide, Inches(2.66), Inches(5.36), Inches(1.8), Inches(1.05), "Peru", "Future fiber", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
-    add_text(slide, Inches(4.88), Inches(5.43), Inches(1.75), Inches(0.82), "Supplier depth follows the same rule as the assortment: narrow, intentional, and quality-led.", 12, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
+    add_text(slide, Inches(4.88), Inches(5.43), Inches(1.9), Inches(0.82), "Supplier depth follows the same rule as the assortment: narrow first, broader second.", 12, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
 
-    # Business model
+    # Revenue model
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
-    add_slide_header(slide, 7, "Business model", "Product revenue establishes the brand, then higher-leverage revenue streams extend it.")
+    add_slide_header(slide, 7, "Revenue model", "Product sales lead; membership, collaborations, and private label extend the brand.")
     add_bullet_card(slide, Inches(0.72), Inches(2.08), Inches(3.0), Inches(4.92), "Revenue stack", [
-        "Direct-to-consumer textile collections",
+        "Collection sales",
         "Passport Club membership",
         "Collaborations and affiliate income",
         "Private label and licensing",
@@ -957,16 +957,16 @@ def build_pptx() -> None:
         p.font.size = Pt(9.2)
         p.font.color.rgb = CREAM_RGB
     add_bullet_card(slide, Inches(8.32), Inches(2.08), Inches(4.24), Inches(4.92), "Why it scales", [
-        "Clear category ownership supports premium pricing.",
+        "Category ownership supports premium pricing.",
         "Membership improves retention and launch depth.",
         "Private label expands margin without breaking the brand.",
-        "Selective partnerships extend reach while preserving taste.",
+        "Selective partnerships extend reach without diluting taste.",
     ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
 
-    # Financial profile
+    # Economic model
     slide = prs.slides.add_slide(blank)
     set_bg(slide, NAVY_RGB)
-    add_slide_header(slide, 8, "Financial profile", "The economic model is built on premium ASPs, disciplined assortment, and content-led acquisition.", dark=True)
+    add_slide_header(slide, 8, "Economic model", "Premium ASPs and disciplined assortment produce a clean revenue ramp.", dark=True)
     add_revenue_chart_slide(slide, Inches(0.72), Inches(2.02), Inches(5.76), Inches(4.9), bg_rgb=CREAM_RGB, axis_rgb=MUTED_RGB, title_rgb=NAVY_RGB)
     add_stat_box(slide, Inches(6.8), Inches(2.12), Inches(1.9), Inches(1.1), money_short(GROSS_PROFIT[2]), "Year 3 gross profit", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
     add_stat_box(slide, Inches(8.92), Inches(2.12), Inches(1.9), Inches(1.1), money_short(OPERATING_PROFIT[2]), "Year 3 operating profit", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
@@ -978,10 +978,10 @@ def build_pptx() -> None:
         "Margin expansion follows assortment quality and private label depth",
     ], fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
 
-    # Roadmap
+    # Scale path
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
-    add_slide_header(slide, 9, "Growth roadmap", "The brand scales from discovery into authority and then into a broader textile lifestyle platform.")
+    add_slide_header(slide, 9, "Scale path", "The company advances from discovery into authority and then into a broader textile platform.")
     add_panel(slide, Inches(0.72), Inches(2.08), Inches(11.86), Inches(2.28), fill_rgb=WHITE_RGB, line_rgb=LINE_RGB)
     line_y = Inches(3.1)
     timeline_line = slide.shapes.add_shape(MSO_AUTO_SHAPE_TYPE.RECTANGLE, Inches(1.35), line_y, Inches(10.56), Inches(0.03))
@@ -1017,21 +1017,21 @@ def build_pptx() -> None:
         "Lifestyle-scale brand equity",
     ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
 
-    # Capital strategy / close
+    # Capital use / close
     slide = prs.slides.add_slide(blank)
     set_bg(slide, NAVY_RGB)
-    add_slide_header(slide, 10, "Capital strategy", "The financing story is strongest when product proof, brand clarity, and supplier discipline reinforce one another.", dark=True)
-    add_bullet_card(slide, Inches(0.72), Inches(2.08), Inches(5.86), Inches(4.72), "Use of funds", [
+    add_slide_header(slide, 10, "Capital use", "Early capital funds product, sourcing, content, and operating depth; later capital supports scale.", dark=True)
+    add_bullet_card(slide, Inches(0.72), Inches(2.08), Inches(5.86), Inches(4.72), "Initial deployment", [
         "Product development and initial inventory",
         "Sourcing travel and supplier onboarding",
         "Content production and ecommerce operations",
         "Early team support and working capital",
     ], fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
-    add_bullet_card(slide, Inches(6.78), Inches(2.08), Inches(5.8), Inches(4.72), "Why this wins", [
+    add_bullet_card(slide, Inches(6.78), Inches(2.08), Inches(5.8), Inches(4.72), "Investor case", [
         "Clear premium category position",
         "Textile fluency as a brand and sourcing moat",
-        "Tightly curated collections rather than broad marketplace sprawl",
-        "A path from editorial discovery into lasting brand equity",
+        "Edited collections rather than marketplace sprawl",
+        "A path from discovery into lasting brand equity",
     ], fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
     add_text(slide, Inches(0.72), Inches(6.92), Inches(11.86), Inches(0.2), "Ali Dandin premium textiles", 15, SAND_RGB, bold=True, font_name="Georgia", align=PP_ALIGN.CENTER)
 
