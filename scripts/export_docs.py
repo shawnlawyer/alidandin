@@ -762,6 +762,32 @@ def add_stat_box(slide, left, top, width, height, value, label, *, fill_rgb, lin
     return panel
 
 
+def add_note_card(slide, left, top, width, height, kicker, title, body, *, fill_rgb, line_rgb, kicker_rgb, title_rgb, body_rgb):
+    panel = add_panel(slide, left, top, width, height, fill_rgb=fill_rgb, line_rgb=line_rgb)
+    frame = panel.text_frame
+    frame.clear()
+    p = frame.paragraphs[0]
+    p.text = kicker
+    p.font.size = Pt(8.5)
+    p.font.bold = True
+    p.font.color.rgb = kicker_rgb
+    p.font.name = "Aptos"
+    p = frame.add_paragraph()
+    p.text = title
+    p.font.size = Pt(16)
+    p.font.bold = True
+    p.font.color.rgb = title_rgb
+    p.font.name = "Georgia"
+    p.space_before = Pt(4)
+    p = frame.add_paragraph()
+    p.text = body
+    p.font.size = Pt(10.5)
+    p.font.color.rgb = body_rgb
+    p.font.name = "Aptos"
+    p.space_before = Pt(5)
+    return panel
+
+
 def add_revenue_chart_slide(slide, left, top, width, height, *, bg_rgb, axis_rgb, title_rgb):
     add_panel(slide, left, top, width, height, fill_rgb=bg_rgb, line_rgb=RGBColor(0xD8, 0xCF, 0xC2))
     add_text(slide, left + Inches(0.18), top + Inches(0.08), width - Inches(0.36), Inches(0.25), "Revenue ramp", 13, title_rgb, bold=True, font_name="Aptos")
@@ -824,30 +850,19 @@ def build_pptx() -> None:
     add_text(slide, Inches(0.75), Inches(0.64), Inches(2.4), Inches(0.22), "ALI DANDIN", 11, SAND_RGB, bold=True)
     add_text(slide, Inches(0.75), Inches(1.15), Inches(5.7), Inches(1.2), "Ali Dandin premium textiles", 31, CREAM_RGB, bold=True, font_name="Georgia")
     add_text(slide, Inches(0.75), Inches(2.3), Inches(5.7), Inches(1.0), "A destination-led textile brand built around provenance, material intelligence, and premium direct-to-consumer commerce.", 15, CREAM_RGB, font_name="Aptos")
-    add_stat_box(slide, Inches(0.75), Inches(4.45), Inches(1.7), Inches(1.0), "Kyoto Indigo", "Opening collection", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
-    add_stat_box(slide, Inches(2.62), Inches(4.45), Inches(1.7), Inches(1.0), "$826K", "Year 1 revenue", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
-    add_stat_box(slide, Inches(4.49), Inches(4.45), Inches(1.7), Inches(1.0), "55%-65%", "Gross margin", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
+    add_stat_box(slide, Inches(0.75), Inches(4.45), Inches(1.35), Inches(1.02), "$826K", "Year 1 revenue", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
+    add_stat_box(slide, Inches(2.25), Inches(4.45), Inches(1.35), Inches(1.02), "4", "Opening SKUs", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
+    add_stat_box(slide, Inches(3.75), Inches(4.45), Inches(1.35), Inches(1.02), "55-65%", "Gross margin", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
+    add_stat_box(slide, Inches(5.25), Inches(4.45), Inches(1.35), Inches(1.02), "Kyoto", "Launch story", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x3F, 0x52, 0x6B), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDA, 0xD4, 0xCA))
     add_text(slide, Inches(0.75), Inches(6.18), Inches(5.9), Inches(0.55), "A category with pricing power, repeatability, and room to expand into signature lines.", 12.5, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
 
     # Market gap
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
     add_slide_header(slide, 2, "Market gap", "Premium buyers want provenance, but current channels flatten textiles into generic product.")
-    add_bullet_card(slide, Inches(0.72), Inches(2.15), Inches(3.75), Inches(4.52), "Too much catalog", [
-        "Selection breadth overwhelms curation.",
-        "Material literacy is rarely the organizing idea.",
-        "Taste is diluted by generic marketplace structure.",
-    ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(4.62), Inches(2.15), Inches(3.75), Inches(4.52), "Premium without depth", [
-        "High-end positioning often lacks sourcing credibility.",
-        "Brand language outpaces real product authority.",
-        "Few players own a clear textile-specific point of view.",
-    ], fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(8.52), Inches(2.15), Inches(4.08), Inches(4.52), "Fragmented trust", [
-        "Customers lack a single trusted textile authority.",
-        "Origin, quality, and taste are hard to read quickly.",
-        "Discovery is broad, but conviction is shallow.",
-    ], fill_rgb=RGBColor(0x1E, 0x2A, 0x3A), line_rgb=RGBColor(0x32, 0x43, 0x59), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_note_card(slide, Inches(0.72), Inches(2.18), Inches(3.78), Inches(4.42), "01", "Too much catalog", "Selection breadth overwhelms curation, so material judgment is buried inside generic assortment.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(4.78), Inches(2.18), Inches(3.78), Inches(4.42), "02", "Premium without depth", "High-end positioning exists, but often without sourcing credibility or a clear textile-specific thesis.", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, kicker_rgb=TERRACOTTA_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(8.84), Inches(2.18), Inches(3.78), Inches(4.42), "03", "Fragmented trust", "Customers still lack a single textile authority they rely on for quality, taste, and origin.", fill_rgb=RGBColor(0x1E, 0x2A, 0x3A), line_rgb=RGBColor(0x32, 0x43, 0x59), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
 
     # Brand position
     slide = prs.slides.add_slide(blank)
@@ -855,11 +870,12 @@ def build_pptx() -> None:
     add_slide_header(slide, 3, "Brand position", "Ali Dandin is a premium textile brand built around provenance, material intelligence, and destination-led collections.")
     add_panel(slide, Inches(0.72), Inches(2.1), Inches(5.6), Inches(4.7), fill_rgb=WHITE_RGB, line_rgb=LINE_RGB)
     add_text(slide, Inches(0.98), Inches(2.38), Inches(4.7), Inches(0.35), "Brand position", 19, NAVY_RGB, bold=True, font_name="Georgia")
-    add_text(slide, Inches(0.98), Inches(2.82), Inches(4.9), Inches(0.95), "The offer narrows to what is ownable: textiles, place, process, and curation. The identity system includes a primary mark, monogram, passport stamp, and textile globe.", 13, MUTED_RGB)
-    add_text(slide, Inches(0.98), Inches(4.04), Inches(1.6), Inches(0.22), "Voice", 11.5, TERRACOTTA_RGB, bold=True)
-    add_text(slide, Inches(0.98), Inches(4.3), Inches(4.9), Inches(0.54), "Measured, materially intelligent, and anchored in provenance.", 12, NAVY_RGB)
-    add_text(slide, Inches(0.98), Inches(5.0), Inches(1.8), Inches(0.22), "Palette", 11.5, TERRACOTTA_RGB, bold=True)
-    add_text(slide, Inches(0.98), Inches(5.26), Inches(4.9), Inches(0.6), "Midnight Blue · Sand · Cream · Terracotta · Olive", 12, NAVY_RGB)
+    add_text(slide, Inches(0.98), Inches(2.82), Inches(4.9), Inches(0.8), "The offer narrows to what is ownable: textiles, place, process, and curation.", 13, MUTED_RGB)
+    add_stat_box(slide, Inches(0.98), Inches(4.0), Inches(1.25), Inches(1.02), "1", "Category", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(2.38), Inches(4.0), Inches(1.25), Inches(1.02), "1", "Collection", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(3.78), Inches(4.0), Inches(1.25), Inches(1.02), "4", "Core marks", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_text(slide, Inches(0.98), Inches(5.32), Inches(1.6), Inches(0.22), "Voice", 11.5, TERRACOTTA_RGB, bold=True)
+    add_text(slide, Inches(0.98), Inches(5.58), Inches(4.9), Inches(0.32), "Measured, materially intelligent, and anchored in provenance.", 11.2, NAVY_RGB)
     add_panel(slide, Inches(6.58), Inches(2.1), Inches(6.02), Inches(4.7), fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB)
     add_picture_contain(slide, IMAGES / "logo_suite.png", Inches(6.72), Inches(2.24), Inches(5.74), Inches(4.42))
 
@@ -890,17 +906,10 @@ def build_pptx() -> None:
     add_slide_header(slide, 5, "Commerce platform", "The storefront is editorial, collection-led, and designed to convert on taste and provenance.")
     add_panel(slide, Inches(0.72), Inches(2.08), Inches(4.4), Inches(4.86), fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB)
     add_picture_contain(slide, IMAGES / "shopify_homepage.png", Inches(0.86), Inches(2.22), Inches(4.12), Inches(4.58))
-    add_bullet_card(slide, Inches(5.38), Inches(2.08), Inches(3.4), Inches(4.86), "Store logic", [
-        "Homepage anchored by a featured collection.",
-        "Journal and process story reinforce the premium position.",
-        "Product pages sell material, process, and origin rather than discounting.",
-    ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(8.98), Inches(2.08), Inches(3.58), Inches(4.86), "Revenue layers", [
-        "Product sales",
-        "Passport Club membership",
-        "Private label expansion",
-        "Selective collaborations and licensing",
-    ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(5.38), Inches(2.08), Inches(3.4), Inches(2.25), "01", "Collection hero", "The homepage opens with one featured collection instead of a broad catalog grid.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(8.98), Inches(2.08), Inches(3.58), Inches(2.25), "02", "Process story", "Editorial blocks explain the material, maker, and origin before hard selling the assortment.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(5.38), Inches(4.69), Inches(3.4), Inches(2.25), "03", "Product clarity", "Collection and product pages are structured around material, process, and provenance.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(8.98), Inches(4.69), Inches(3.58), Inches(2.25), "04", "Membership layer", "Passport Club sits inside the brand as a deeper relationship rather than a disruptive conversion trick.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
 
     # Sourcing network
     slide = prs.slides.add_slide(blank)
@@ -968,15 +977,11 @@ def build_pptx() -> None:
     set_bg(slide, NAVY_RGB)
     add_slide_header(slide, 8, "Economic model", "Premium ASPs and disciplined assortment produce a clean revenue ramp.", dark=True)
     add_revenue_chart_slide(slide, Inches(0.72), Inches(2.02), Inches(5.76), Inches(4.9), bg_rgb=CREAM_RGB, axis_rgb=MUTED_RGB, title_rgb=NAVY_RGB)
-    add_stat_box(slide, Inches(6.8), Inches(2.12), Inches(1.9), Inches(1.1), money_short(GROSS_PROFIT[2]), "Year 3 gross profit", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
-    add_stat_box(slide, Inches(8.92), Inches(2.12), Inches(1.9), Inches(1.1), money_short(OPERATING_PROFIT[2]), "Year 3 operating profit", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
-    add_stat_box(slide, Inches(11.04), Inches(2.12), Inches(1.5), Inches(1.1), "$8", "Membership", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
-    add_bullet_card(slide, Inches(6.8), Inches(3.6), Inches(5.74), Inches(3.32), "Model characteristics", [
-        "Year 1 revenue: $826K",
-        "Year 2 revenue: $3.6M",
-        "Year 3 revenue: $9.352M",
-        "Margin expansion follows assortment quality and private label depth",
-    ], fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_stat_box(slide, Inches(6.8), Inches(2.12), Inches(2.6), Inches(1.12), "$6.91M", "Year 3 product revenue", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(9.68), Inches(2.12), Inches(2.88), Inches(1.12), "57-61%", "Gross margin range", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(6.8), Inches(3.55), Inches(2.6), Inches(1.12), "12", "Collections by Year 3", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(9.68), Inches(3.55), Inches(2.88), Inches(1.12), "$8", "Membership price", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(6.8), Inches(5.0), Inches(5.76), Inches(1.9), "WHY IT HOLDS", "Clean revenue ramp", "Small-batch launches reduce inventory exposure while preserving premium brand specificity and room for private label expansion.", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
 
     # Scale path
     slide = prs.slides.add_slide(blank)
@@ -1021,18 +1026,12 @@ def build_pptx() -> None:
     slide = prs.slides.add_slide(blank)
     set_bg(slide, NAVY_RGB)
     add_slide_header(slide, 10, "Capital use", "Early capital funds product, sourcing, content, and operating depth; later capital supports scale.", dark=True)
-    add_bullet_card(slide, Inches(0.72), Inches(2.08), Inches(5.86), Inches(4.72), "Initial deployment", [
-        "Product development and initial inventory",
-        "Sourcing travel and supplier onboarding",
-        "Content production and ecommerce operations",
-        "Early team support and working capital",
-    ], fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
-    add_bullet_card(slide, Inches(6.78), Inches(2.08), Inches(5.8), Inches(4.72), "Investor case", [
-        "Clear premium category position",
-        "Textile fluency as a brand and sourcing moat",
-        "Edited collections rather than marketplace sprawl",
-        "A path from discovery into lasting brand equity",
-    ], fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(0.72), Inches(2.08), Inches(2.8), Inches(2.18), "01", "Product", "Inventory, sampling, and development for a narrow premium assortment.", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_note_card(slide, Inches(3.78), Inches(2.08), Inches(2.8), Inches(2.18), "02", "Sourcing", "Travel, supplier onboarding, and quality control across priority regions.", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_note_card(slide, Inches(0.72), Inches(4.62), Inches(2.8), Inches(2.18), "03", "Content", "Editorial production that turns process and origin into conversion-ready story.", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_note_card(slide, Inches(3.78), Inches(4.62), Inches(2.8), Inches(2.18), "04", "Operations", "Ecommerce, fulfillment, and early team support to keep launches reliable.", fill_rgb=RGBColor(0x2B, 0x3A, 0x4C), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_stat_box(slide, Inches(6.94), Inches(2.1), Inches(5.48), Inches(1.35), "$35K-$70K", "Initial capital range", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(6.94), Inches(3.86), Inches(5.48), Inches(2.94), "INVESTOR CASE", "Why this works", "Ali Dandin combines category clarity, sourcing fluency, premium pricing power, and a disciplined path from edited collections into signature lines and selective partnerships.", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=TERRACOTTA_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
     add_text(slide, Inches(0.72), Inches(6.92), Inches(11.86), Inches(0.2), "Ali Dandin premium textiles", 15, SAND_RGB, bold=True, font_name="Georgia", align=PP_ALIGN.CENTER)
 
     prs.core_properties.title = "Ali Dandin Investor Deck"
