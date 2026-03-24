@@ -165,7 +165,10 @@
     .two-col,
     .three-col,
     .metrics-grid,
-    .risk-grid {
+    .risk-grid,
+    .stat-grid,
+    .phase-grid,
+    .year-grid {
       display: grid;
       gap: 20px;
     }
@@ -177,8 +180,14 @@
 
     .three-col,
     .metrics-grid,
-    .risk-grid {
+    .risk-grid,
+    .phase-grid,
+    .year-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .stat-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .eyebrow {
@@ -228,7 +237,10 @@
     .metric-card strong,
     .info-card strong,
     .risk-card strong,
-    .note-card strong {
+    .note-card strong,
+    .stat-tile strong,
+    .phase-card strong,
+    .year-card strong {
       display: block;
       margin-bottom: 8px;
       font-size: 1rem;
@@ -257,6 +269,48 @@
     .lede {
       font-size: 1.08rem;
       color: var(--navy);
+    }
+
+    .stat-tile {
+      border-radius: 18px;
+      border: 1px solid rgba(255, 250, 243, 0.14);
+      background: rgba(255, 250, 243, 0.08);
+      padding: 18px;
+    }
+
+    .stat-tile .value,
+    .phase-card .value,
+    .year-card .value {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1;
+    }
+
+    .stat-tile .value {
+      color: #fffaf3;
+    }
+
+    .stat-tile .label,
+    .phase-card .label,
+    .year-card .label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .stat-tile .label {
+      color: rgba(247, 243, 237, 0.74);
+    }
+
+    .stat-tile p {
+      margin: 0;
+      color: rgba(247, 243, 237, 0.82);
+      font-size: 0.92rem;
     }
 
     .figure-stack {
@@ -314,6 +368,30 @@
       margin-top: 18px;
     }
 
+    .phase-card,
+    .year-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 243, 0.76);
+      padding: 22px;
+    }
+
+    .phase-card .value,
+    .year-card .value {
+      color: var(--navy);
+    }
+
+    .phase-card .label,
+    .year-card .label {
+      color: var(--muted);
+    }
+
+    .phase-card p,
+    .year-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
     .footer-actions {
       display: flex;
       gap: 12px;
@@ -350,11 +428,6 @@
       outline: none;
     }
 
-    .small {
-      font-size: 0.88rem;
-      color: var(--muted);
-    }
-
     @media (max-width: 1120px) {
       .page {
         width: min(calc(100% - 24px), 1020px);
@@ -378,7 +451,10 @@
       .three-col,
       .metrics-grid,
       .risk-grid,
-      .note-row {
+      .note-row,
+      .stat-grid,
+      .phase-grid,
+      .year-grid {
         grid-template-columns: 1fr;
       }
 
@@ -486,6 +562,28 @@
             </p>
           </div>
         </div>
+        <div class="stat-grid" style="margin-top: 20px;">
+          <article class="stat-tile">
+            <span class="value">$9.35M</span>
+            <span class="label">Year 3 revenue</span>
+            <p>Three-year scale path anchored by product, membership, and partnership revenue.</p>
+          </article>
+          <article class="stat-tile">
+            <span class="value">55%–65%</span>
+            <span class="label">Gross margin target</span>
+            <p>Premium textile pricing with disciplined sourcing and direct-to-consumer distribution.</p>
+          </article>
+          <article class="stat-tile">
+            <span class="value">Kyoto</span>
+            <span class="label">Opening collection</span>
+            <p>The first assortment establishes the full brand system in one coherent material story.</p>
+          </article>
+          <article class="stat-tile">
+            <span class="value">3</span>
+            <span class="label">Scale phases</span>
+            <p>Discovery, authority, and broader lifestyle expansion.</p>
+          </article>
+        </div>
       </section>
 
       <section id="company-overview">
@@ -567,8 +665,8 @@
           <article class="note-card">
             <strong>Competitive set</strong>
             <p>
-              The real comparison set includes premium home brands, artisanal marketplaces, and content-led commerce brands,
-              but the strongest differentiation comes from specializing in textiles rather than operating as a general store.
+              The comparison set includes premium home brands, artisanal marketplaces, and content-led commerce brands. The
+              category advantage comes from textile specialization rather than general-store breadth.
             </p>
           </article>
         </div>
@@ -611,8 +709,8 @@
               cultural association in a way that translates cleanly into product, imagery, and story.
             </p>
             <p>
-              The launch assortment should stay narrow. A small, disciplined range creates better merchandising, better
-              storytelling, and better operational control than a broad assortment. Each item should earn its place by
+              The launch assortment stays narrow. A small, disciplined range creates better merchandising, better
+              storytelling, and better operational control than a broad assortment. Each item earns its place by
               expressing the same destination story in a different use case.
             </p>
             <ul>
@@ -688,7 +786,7 @@
         <p>
           The customer acquisition model begins with story: the destination, the material, the maker, and the product. That
           story is then translated into an editorial storefront and a tightly curated release calendar. The launch strategy
-          should prioritize clarity over volume. One strong collection, one strong visual system, and one coherent narrative
+          prioritizes clarity over volume. One strong collection, one strong visual system, and one coherent narrative
           outperform a scattered multi-category debut.
         </p>
         <div class="three-col" style="margin-top: 18px;">
@@ -774,7 +872,7 @@
       <section id="commerce-platform">
         <div class="section-head">
           <h3>Commerce Platform</h3>
-          <p>The storefront should feel editorial, premium, and collection-led rather than catalog-heavy.</p>
+          <p>The storefront is editorial, premium, and collection-led rather than catalog-heavy.</p>
         </div>
         <div class="two-col">
           <div class="figure-stack">
@@ -783,7 +881,7 @@
           </div>
           <div>
             <p>
-              The commerce platform should present one clear featured collection, one supporting artisan or process story,
+              The commerce platform presents one clear featured collection, one supporting artisan or process story,
               and one disciplined product grid. That hierarchy protects the premium position and prevents the site from
               becoming visually noisy or operationally scattered.
             </p>
@@ -803,59 +901,25 @@
           <p>The planning model assumes a premium price architecture and disciplined collection growth.</p>
         </div>
         <p>
-          The most sensible financial case for Ali Dandin starts with a narrow assortment, premium average selling prices,
-          and a content-driven acquisition engine. The following three-year planning case is directional and should be
-          refined into a deeper workbook, but it provides a coherent growth path for the business.
+          The financial case is built on narrow assortment, premium average selling prices, and content-driven acquisition.
+          That combination produces a cleaner scale path than a broad catalog model and preserves the premium character of the brand.
         </p>
-        <div class="table-wrap" style="margin-top: 18px;">
-          <table>
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Year 1</th>
-                <th>Year 2</th>
-                <th>Year 3</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Audience size</td>
-                <td>50,000</td>
-                <td>250,000</td>
-                <td>1,000,000</td>
-              </tr>
-              <tr>
-                <td>Collections launched</td>
-                <td>4</td>
-                <td>8</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <td>Average selling price</td>
-                <td>$65</td>
-                <td>$70</td>
-                <td>$72</td>
-              </tr>
-              <tr>
-                <td>Product revenue</td>
-                <td>$650,000</td>
-                <td>$2,800,000</td>
-                <td>$6,912,000</td>
-              </tr>
-              <tr>
-                <td>Membership + partnerships</td>
-                <td>$176,000</td>
-                <td>$800,000</td>
-                <td>$2,440,000</td>
-              </tr>
-              <tr>
-                <td>Total revenue</td>
-                <td>$826,000</td>
-                <td>$3,600,000</td>
-                <td>$9,352,000</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="year-grid" style="margin-top: 18px;">
+          <article class="year-card">
+            <span class="value">$826K</span>
+            <span class="label">Year 1 revenue</span>
+            <p>50K audience, 4 collections, and a product-led revenue mix establish the first proof point.</p>
+          </article>
+          <article class="year-card">
+            <span class="value">$3.60M</span>
+            <span class="label">Year 2 revenue</span>
+            <p>8 collections, 250K audience, and broader recurring revenue deepen the model.</p>
+          </article>
+          <article class="year-card">
+            <span class="value">$9.35M</span>
+            <span class="label">Year 3 revenue</span>
+            <p>12 collections and 1M audience establish the platform as a category authority.</p>
+          </article>
         </div>
         <div class="metrics-grid" style="margin-top: 18px;">
           <article class="metric-card">
@@ -878,18 +942,21 @@
           <h3>Growth Roadmap</h3>
           <p>The business scales in three clean phases: discovery, authority, and lifestyle expansion.</p>
         </div>
-        <div class="three-col">
-          <article class="info-card">
-            <strong>Phase 1: Discovery brand</strong>
-            <p>Establish authority through tightly curated launches, strong brand imagery, and one destination-led collection at a time.</p>
+        <div class="phase-grid">
+          <article class="phase-card">
+            <span class="value">01</span>
+            <span class="label">Discovery brand</span>
+            <p>Authority is established through tightly curated launches, strong brand imagery, and one destination-led collection at a time.</p>
           </article>
-          <article class="info-card">
-            <strong>Phase 2: Textile authority</strong>
-            <p>Introduce repeatable collections, deepen supplier relationships, and develop signature private label categories.</p>
+          <article class="phase-card">
+            <span class="value">02</span>
+            <span class="label">Textile authority</span>
+            <p>Repeatable collections, deeper supplier relationships, and signature private label categories define the next phase.</p>
           </article>
-          <article class="info-card">
-            <strong>Phase 3: Lifestyle expansion</strong>
-            <p>Extend into bedding, table linens, broader home textiles, selective licensing, and prestige retail partnerships.</p>
+          <article class="phase-card">
+            <span class="value">03</span>
+            <span class="label">Lifestyle expansion</span>
+            <p>Bedding, table linens, broader home textiles, selective licensing, and prestige retail partnerships broaden the platform.</p>
           </article>
         </div>
         <div class="note-row">
@@ -942,7 +1009,7 @@
           <article class="note-card">
             <strong>Governance principle</strong>
             <p>
-              Every new collection, region, or partnership should reinforce the brand’s authority in premium textiles rather
+              Every new collection, region, or partnership reinforces the brand’s authority in premium textiles rather
               than distract from it.
             </p>
           </article>
@@ -982,10 +1049,6 @@
           <a class="button secondary" href="../assets/docs/investor_business_plan.pdf" download>Download PDF</a>
           <a class="button secondary" href="../investor-deck/">Open Investor Deck</a>
         </div>
-        <p class="small">
-          This business plan is based on the current Ali Dandin brand direction, product architecture, sourcing framework,
-          and planning assumptions reflected across the live site and supporting materials.
-        </p>
       </section>
     </main>
   </div>
