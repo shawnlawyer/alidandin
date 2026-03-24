@@ -5,7 +5,9 @@ from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from openpyxl import Workbook
+from openpyxl.chart import BarChart, LineChart, Reference
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.utils import get_column_letter
 from PIL import Image as PILImage
 from pptx import Presentation
 from pptx.dml.color import RGBColor
@@ -42,9 +44,27 @@ WHITE = colors.white
 
 
 YEAR_LABELS = ["Year 1", "Year 2", "Year 3"]
-REVENUE = [826000, 3600000, 9352000]
-GROSS_PROFIT = [546000, 2480000, 6664000]
-OPERATING_PROFIT = [178400, 1333000, 4265280]
+AUDIENCE = [50000, 250000, 1000000]
+COLLECTIONS = [4, 8, 12]
+TOTAL_UNITS = [10000, 40000, 96000]
+AVERAGE_SELLING_PRICE = [65, 70, 72]
+PRODUCT_REVENUE = [650000, 2800000, 6912000]
+MEMBERSHIP_COUNT = [1000, 5000, 15000]
+MEMBERSHIP_CONVERSION = [0.02, 0.02, 0.015]
+MEMBERSHIP_PRICE = 8
+MEMBERSHIP_REVENUE = [96000, 480000, 1440000]
+PARTNERSHIP_REVENUE = [80000, 320000, 1000000]
+REVENUE = [product + membership + partnership for product, membership, partnership in zip(PRODUCT_REVENUE, MEMBERSHIP_REVENUE, PARTNERSHIP_REVENUE)]
+COGS = [280000, 1120000, 2688000]
+TRAVEL_AND_SOURCING = [60000, 85000, 120000]
+TEAM_COST = [150000, 450000, 900000]
+MARKETING_AND_GROWTH = [82600, 432000, 1028720]
+GENERAL_OPS = [75000, 180000, 350000]
+OPERATING_COSTS = [travel + team + marketing + ops for travel, team, marketing, ops in zip(TRAVEL_AND_SOURCING, TEAM_COST, MARKETING_AND_GROWTH, GENERAL_OPS)]
+GROSS_PROFIT = [revenue - cogs for revenue, cogs in zip(REVENUE, COGS)]
+OPERATING_PROFIT = [gross_profit - operating_cost for gross_profit, operating_cost in zip(GROSS_PROFIT, OPERATING_COSTS)]
+GROSS_MARGIN = [gross_profit / revenue for gross_profit, revenue in zip(GROSS_PROFIT, REVENUE)]
+OPERATING_MARGIN = [operating_profit / revenue for operating_profit, revenue in zip(OPERATING_PROFIT, REVENUE)]
 
 
 @dataclass(frozen=True)
@@ -57,6 +77,15 @@ class ProductCard:
 class RegionCard:
     name: str
     note: str
+
+
+@dataclass(frozen=True)
+class SkuModel:
+    name: str
+    role: str
+    unit_mix: float
+    asp: tuple[float, float, float]
+    direct_cost: tuple[float, float, float]
 
 
 PRODUCTS = [
@@ -72,6 +101,28 @@ REGIONS = [
     RegionCard("Turkey", "Cotton scale, towels, throws, and production fluency for broader textile programs."),
     RegionCard("Italy", "Luxury finishing, linen credibility, and eventual prestige textile manufacturing."),
     RegionCard("Peru", "Future expansion into alpaca and rich fiber stories for premium soft goods."),
+]
+
+SKU_MODELS = [
+    SkuModel("Indigo Linen Throw", "Hero textile anchor with the strongest visual and gifting appeal.", 0.18, (118, 128, 132), (52, 51, 52)),
+    SkuModel("Indigo Scarf", "Portable entry price point that keeps the collection accessible and repeatable.", 0.34, (52, 56, 58), (22, 22, 22)),
+    SkuModel("Indigo Pillow", "Home category bridge that brings the collection into everyday living.", 0.24, (69, 73, 75), (30, 30, 30)),
+    SkuModel("Indigo Textile Set", "Collector-oriented accessory product with strong storytelling value.", 0.24, (40, 44, 45), (17, 17, 17)),
+]
+
+LAUNCH_CADENCE = [
+    ("Year 1", "4 launches", "Kyoto Indigo, Amalfi Linen, Marrakech Weave, Anatolia Cotton", "Build recognition around one destination story at a time."),
+    ("Year 2", "8 launches", "Repeat winners plus Jaipur, Tuscany, Oaxaca, and Denizli textile programs", "Broaden assortment carefully while preserving the destination-led model."),
+    ("Year 3", "12 launches", "Monthly cadence across hero destinations and early private label extensions", "Move from proof into category authority and signature lines."),
+]
+
+CAPITAL_PLAN = [
+    ("Product development & samples", 12000, 85000, "Sampling, refinement, and early private label design work."),
+    ("Inventory", 22000, 180000, "Opening buys, reorders, and broader assortment depth."),
+    ("Travel & sourcing", 10000, 90000, "Supplier visits, quality control, and regional discovery work."),
+    ("Brand & content production", 12000, 100000, "Editorial, video, product storytelling, and launch assets."),
+    ("Commerce & fulfillment systems", 8000, 45000, "Platform, fulfillment setup, and operational infrastructure."),
+    ("Team build-out", 6000, 250000, "Design, operations, growth, and supplier management capacity."),
 ]
 
 
@@ -398,9 +449,10 @@ def financial_table(styles) -> Table:
 def unit_economics_table() -> Table:
     rows = [
         ["Unit economics", "Value"],
-        ["Average selling price", "$65-$72"],
-        ["Gross margin target", "55%-65%"],
-        ["Membership price", "$8 / month"],
+        ["Average selling price range", f"${AVERAGE_SELLING_PRICE[0]}-${AVERAGE_SELLING_PRICE[-1]}"],
+        ["Average direct cost / unit", "$28"],
+        ["Gross margin range", "55%-65%"],
+        ["Membership price", f"${MEMBERSHIP_PRICE} / month"],
         ["Initial capital range", "$35K-$70K"],
     ]
     table = Table(rows, colWidths=[2.5 * inch, 1.9 * inch])
@@ -415,6 +467,63 @@ def unit_economics_table() -> Table:
                 ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
                 ("TOPPADDING", (0, 0), (-1, -1), 8),
                 ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ]
+        )
+    )
+    return table
+
+
+def revenue_mix_table() -> Table:
+    rows = [
+        ["Revenue stream", "Year 1", "Year 2", "Year 3"],
+        ["Product revenue", money_short(PRODUCT_REVENUE[0]), money_short(PRODUCT_REVENUE[1]), money_short(PRODUCT_REVENUE[2])],
+        ["Membership revenue", money_short(MEMBERSHIP_REVENUE[0]), money_short(MEMBERSHIP_REVENUE[1]), money_short(MEMBERSHIP_REVENUE[2])],
+        ["Partnership revenue", money_short(PARTNERSHIP_REVENUE[0]), money_short(PARTNERSHIP_REVENUE[1]), money_short(PARTNERSHIP_REVENUE[2])],
+    ]
+    table = Table(rows, colWidths=[2.25 * inch, 1.32 * inch, 1.32 * inch, 1.32 * inch])
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), NAVY),
+                ("TEXTCOLOR", (0, 0), (-1, 0), WHITE),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("BACKGROUND", (0, 1), (-1, -1), WHITE),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -1), [WHITE, colors.HexColor("#FBF6EF")]),
+                ("FONTNAME", (0, 1), (-1, -1), "Helvetica"),
+                ("TEXTCOLOR", (0, 1), (-1, -1), INK),
+                ("GRID", (0, 0), (-1, -1), 0.6, LINE),
+                ("TOPPADDING", (0, 0), (-1, -1), 7),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+                ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+            ]
+        )
+    )
+    return table
+
+
+def capital_plan_table() -> Table:
+    rows = [["Use of funds", "Initial capital", "Growth capital"]]
+    for category, initial_capital, growth_capital, _ in CAPITAL_PLAN:
+        rows.append([category, f"${initial_capital:,.0f}", f"${growth_capital:,.0f}"])
+    rows.append([
+        "Total",
+        f"${sum(item[1] for item in CAPITAL_PLAN):,.0f}",
+        f"${sum(item[2] for item in CAPITAL_PLAN):,.0f}",
+    ])
+    table = Table(rows, colWidths=[3.05 * inch, 1.6 * inch, 1.6 * inch])
+    table.setStyle(
+        TableStyle(
+            [
+                ("BACKGROUND", (0, 0), (-1, 0), SAND_SOFT),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("TEXTCOLOR", (0, 0), (-1, 0), NAVY),
+                ("ROWBACKGROUNDS", (0, 1), (-1, -2), [WHITE, colors.HexColor("#FBF6EF")]),
+                ("BACKGROUND", (0, -1), (-1, -1), colors.HexColor("#EEF4E7")),
+                ("FONTNAME", (0, -1), (-1, -1), "Helvetica-Bold"),
+                ("GRID", (0, 0), (-1, -1), 0.6, LINE),
+                ("TOPPADDING", (0, 0), (-1, -1), 7),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+                ("ALIGN", (1, 1), (-1, -1), "CENTER"),
             ]
         )
     )
@@ -479,13 +588,40 @@ def build_pdf() -> None:
         [[
             stat_card("Kyoto Indigo", "Opening collection", styles),
             stat_card("$826K", "Year 1 revenue", styles),
-            stat_card("$9.4M", "Year 3 revenue", styles),
+            stat_card(money_short(REVENUE[2]), "Year 3 revenue", styles),
             stat_card("55%-65%", "Gross margin target", styles),
         ]],
         colWidths=[1.68 * inch, 1.4 * inch, 1.4 * inch, 1.4 * inch],
     )
     metrics.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0), ("VALIGN", (0, 0), (-1, -1), "MIDDLE")]))
     story.append(metrics)
+    story.append(PageBreak())
+
+    story.extend(section_heading("Brand snapshot", "A textile-led brand with clean scale logic", "Ali Dandin combines category clarity, disciplined product architecture, and premium positioning in a way that translates well across commerce, partnerships, and future private label development.", styles))
+    snapshot_cards = Table(
+        [[
+            narrative_card("Core thesis", "Premium textiles built around provenance, destination, and material literacy rather than generic travel commerce.", styles),
+            narrative_card("Opening move", "Kyoto Indigo defines the first collection and establishes the visual and merchandising grammar.", styles),
+        ], [
+            narrative_card("Commercial logic", "Narrow collections support stronger pricing, cleaner storytelling, and lower early inventory risk.", styles),
+            narrative_card("Expansion path", "The platform grows into repeat collections, signature lines, and selective retail or licensing relationships.", styles),
+        ]],
+        colWidths=[3.18 * inch, 3.18 * inch],
+    )
+    snapshot_cards.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
+    snapshot_stats = Table(
+        [[
+            stat_card("4", "Opening SKUs", styles),
+            stat_card("12", "Collections by Year 3", styles),
+            stat_card(f"{MEMBERSHIP_COUNT[-1]:,}", "Membership base", styles),
+            stat_card("$35K-$70K", "Initial capital", styles),
+        ]],
+        colWidths=[1.56 * inch, 1.56 * inch, 1.56 * inch, 1.56 * inch],
+    )
+    snapshot_stats.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
+    story.append(snapshot_cards)
+    story.append(Spacer(1, 0.16 * inch))
+    story.append(snapshot_stats)
     story.append(PageBreak())
 
     story.extend(section_heading("Investment case", "A premium textile authority with clear commercial logic", "Ali Dandin is positioned as a specialized authority in premium textiles. The thesis is simple: provenance, material literacy, and destination-led curation create a cleaner premium brand than broad travel commerce or generic artisan marketplaces.", styles))
@@ -633,6 +769,8 @@ def build_pdf() -> None:
     )
     finance_cards.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
     story.append(finance_cards)
+    story.append(Spacer(1, 0.16 * inch))
+    story.append(revenue_mix_table())
     story.append(PageBreak())
 
     story.extend(section_heading("Scale path", "From destination-led discovery into a modern textile house", "The company scales from discovery into authority and into systems that support long-term growth. The expansion path moves through repeat collections, private label, prestige partnerships, and eventual home textile breadth.", styles))
@@ -660,6 +798,40 @@ def build_pdf() -> None:
     )
     capital_cards.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
     story.append(capital_cards)
+    story.append(Spacer(1, 0.18 * inch))
+    story.append(capital_plan_table())
+    story.append(PageBreak())
+
+    story.extend(section_heading("Closing perspective", "A premium textile brand with room to compound", "Ali Dandin is strongest when it stays narrow, exacting, and textile-led. The brand earns authority through destination-based collections, premium product judgment, and a commercial system that compounds through repeat launches and signature lines.", styles))
+    close_layout = Table(
+        [[
+            [
+                Paragraph("What lasts", styles["CardTitle"]),
+                Paragraph("The long-term asset is customer trust around taste, provenance, and material literacy.", styles["CardBody"]),
+                Spacer(1, 0.08 * inch),
+                Paragraph("What scales", styles["CardTitle"]),
+                Paragraph("Collections, membership, private label, and prestige partnerships expand the platform without breaking the core brand thesis.", styles["CardBody"]),
+                Spacer(1, 0.08 * inch),
+                Paragraph("What differentiates", styles["CardTitle"]),
+                Paragraph("Few brands combine textile fluency, destination-led curation, and premium editorial commerce in one coherent system.", styles["CardBody"]),
+            ],
+            card([fitted_image(IMAGES / "shopify_homepage.png", 3.05 * inch, 4.25 * inch)], background=colors.HexColor("#F7F0E5"), padding=10),
+        ]],
+        colWidths=[3.55 * inch, 3.05 * inch],
+    )
+    close_layout.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
+    close_stats = Table(
+        [[
+            stat_card(money_short(PRODUCT_REVENUE[-1]), "Year 3 product revenue", styles),
+            stat_card(f"{int(GROSS_MARGIN[-1] * 100)}%", "Indicative gross margin", styles),
+            stat_card(f"{MEMBERSHIP_COUNT[-1]:,}", "Year 3 members", styles),
+        ]],
+        colWidths=[2.1 * inch, 2.1 * inch, 2.1 * inch],
+    )
+    close_stats.setStyle(TableStyle([("LEFTPADDING", (0, 0), (-1, -1), 0), ("RIGHTPADDING", (0, 0), (-1, -1), 0)]))
+    story.append(close_layout)
+    story.append(Spacer(1, 0.16 * inch))
+    story.append(close_stats)
 
     doc = SimpleDocTemplate(
         str(output),
@@ -929,48 +1101,18 @@ def build_pptx() -> None:
     add_stat_box(slide, Inches(2.66), Inches(5.36), Inches(1.8), Inches(1.05), "Peru", "Future fiber", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
     add_text(slide, Inches(4.88), Inches(5.43), Inches(1.9), Inches(0.82), "Supplier depth follows the same rule as the assortment: narrow first, broader second.", 12, RGBColor(0xD8, 0xD1, 0xC7), font_name="Aptos")
 
-    # Revenue model
+    # Revenue stack
     slide = prs.slides.add_slide(blank)
     set_bg(slide, CREAM_RGB)
-    add_slide_header(slide, 7, "Revenue model", "Product sales lead; membership, collaborations, and private label extend the brand.")
-    add_bullet_card(slide, Inches(0.72), Inches(2.08), Inches(3.0), Inches(4.92), "Revenue stack", [
-        "Collection sales",
-        "Passport Club membership",
-        "Collaborations and affiliate income",
-        "Private label and licensing",
-    ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
-    add_panel(slide, Inches(4.02), Inches(2.08), Inches(4.0), Inches(4.92), fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB)
-    add_text(slide, Inches(4.3), Inches(2.36), Inches(3.4), Inches(0.35), "Value ladder", 18, NAVY_RGB, bold=True, font_name="Georgia")
-    steps = [
-        ("Product", "Destination-led textile drops"),
-        ("Membership", "Early access and editorial depth"),
-        ("Private label", "Signature lines with stronger margin"),
-        ("Partnerships", "Selective prestige distribution"),
-    ]
-    step_top = Inches(2.88)
-    for idx, (name, desc) in enumerate(steps):
-        width = Inches(2.25 + idx * 0.36)
-        left = Inches(4.32) + Inches(0.18 * (3 - idx))
-        panel = add_panel(slide, left, step_top + Inches(idx * 0.63), width, Inches(0.5), fill_rgb=[RGBColor(0x1E, 0x2A, 0x3A), RGBColor(0x3A, 0x49, 0x5D), RGBColor(0x6D, 0x53, 0x40), RGBColor(0x61, 0x71, 0x47)][idx], line_rgb=[RGBColor(0x1E, 0x2A, 0x3A), RGBColor(0x3A, 0x49, 0x5D), RGBColor(0x6D, 0x53, 0x40), RGBColor(0x61, 0x71, 0x47)][idx])
-        frame = panel.text_frame
-        frame.clear()
-        p = frame.paragraphs[0]
-        p.text = name
-        p.font.name = "Aptos"
-        p.font.size = Pt(11.5)
-        p.font.bold = True
-        p.font.color.rgb = CREAM_RGB
-        p = frame.add_paragraph()
-        p.text = desc
-        p.font.name = "Aptos"
-        p.font.size = Pt(9.2)
-        p.font.color.rgb = CREAM_RGB
-    add_bullet_card(slide, Inches(8.32), Inches(2.08), Inches(4.24), Inches(4.92), "Why it scales", [
-        "Category ownership supports premium pricing.",
-        "Membership improves retention and launch depth.",
-        "Private label expands margin without breaking the brand.",
-        "Selective partnerships extend reach without diluting taste.",
-    ], fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_slide_header(slide, 7, "Revenue stack", "Product sales lead; membership and partnerships deepen the model before broader private label expansion.")
+    add_note_card(slide, Inches(0.72), Inches(2.08), Inches(3.78), Inches(2.24), "01", "Collection sales", "Destination-led drops remain the core engine, representing the majority of Year 3 revenue and reinforcing the textile-first thesis.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(4.78), Inches(2.08), Inches(3.78), Inches(2.24), "02", "Membership", "Passport Club adds recurring revenue, improves retention, and deepens ownership of launches through early access and editorial benefits.", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, kicker_rgb=TERRACOTTA_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(8.84), Inches(2.08), Inches(3.78), Inches(2.24), "03", "Partnerships", "Selective collaborations and affiliate income extend monetization without turning the brand into a broad wholesale platform.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(0.72), Inches(4.76), Inches(2.38), Inches(1.18), "$9.35M", "Year 3 total revenue", fill_rgb=RGBColor(0x1E, 0x2A, 0x3A), line_rgb=RGBColor(0x1E, 0x2A, 0x3A), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_stat_box(slide, Inches(3.38), Inches(4.76), Inches(2.38), Inches(1.18), "74%", "Product mix", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(6.04), Inches(4.76), Inches(2.38), Inches(1.18), "15%", "Membership mix", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(8.7), Inches(4.76), Inches(2.38), Inches(1.18), "11%", "Partnership mix", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(11.36), Inches(4.76), Inches(1.26), Inches(1.18), "PL", "Future layer", fill_rgb=RGBColor(0x61, 0x71, 0x47), line_rgb=RGBColor(0x61, 0x71, 0x47), value_rgb=CREAM_RGB, label_rgb=RGBColor(0xF0, 0xEA, 0xDF))
 
     # Economic model
     slide = prs.slides.add_slide(blank)
@@ -1034,6 +1176,20 @@ def build_pptx() -> None:
     add_note_card(slide, Inches(6.94), Inches(3.86), Inches(5.48), Inches(2.94), "INVESTOR CASE", "Why this works", "Ali Dandin combines category clarity, sourcing fluency, premium pricing power, and a disciplined path from edited collections into signature lines and selective partnerships.", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=RGBColor(0x35, 0x47, 0x5E), kicker_rgb=TERRACOTTA_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
     add_text(slide, Inches(0.72), Inches(6.92), Inches(11.86), Inches(0.2), "Ali Dandin premium textiles", 15, SAND_RGB, bold=True, font_name="Georgia", align=PP_ALIGN.CENTER)
 
+    # Close
+    slide = prs.slides.add_slide(blank)
+    set_bg(slide, CREAM_RGB)
+    add_text(slide, Inches(0.88), Inches(0.72), Inches(2.4), Inches(0.22), "ALI DANDIN", 11, TERRACOTTA_RGB, bold=True)
+    add_text(slide, Inches(0.88), Inches(1.26), Inches(7.0), Inches(1.0), "Ali Dandin premium textiles", 32, NAVY_RGB, bold=True, font_name="Georgia")
+    add_text(slide, Inches(0.88), Inches(2.24), Inches(7.2), Inches(1.1), "A premium textile brand built around provenance, material intelligence, and destination-led collections.", 16, MUTED_RGB, font_name="Aptos")
+    add_note_card(slide, Inches(0.88), Inches(3.58), Inches(3.55), Inches(2.08), "WHY IT MATTERS", "Category trust", "The brand owns a clear point of view in textiles rather than competing as a broad lifestyle or travel catalog.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(4.62), Inches(3.58), Inches(3.55), Inches(2.08), "WHY IT SCALES", "Repeatable system", "Collections, membership, private label, and partnerships extend the same thesis without breaking it.", fill_rgb=WHITE_RGB, line_rgb=LINE_RGB, kicker_rgb=SAND_RGB, title_rgb=NAVY_RGB, body_rgb=MUTED_RGB)
+    add_note_card(slide, Inches(8.36), Inches(3.58), Inches(3.55), Inches(2.08), "WHY IT WINS", "Material authority", "Ali's textile fluency turns product judgment and sourcing discipline into pricing power and brand trust.", fill_rgb=RGBColor(0x1E, 0x2A, 0x3A), line_rgb=RGBColor(0x1E, 0x2A, 0x3A), kicker_rgb=SAND_RGB, title_rgb=CREAM_RGB, body_rgb=RGBColor(0xDD, 0xD6, 0xCC))
+    add_stat_box(slide, Inches(0.88), Inches(6.1), Inches(2.25), Inches(0.94), "$9.35M", "Year 3 revenue", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(3.38), Inches(6.1), Inches(2.25), Inches(0.94), "55-65%", "Gross margin", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_stat_box(slide, Inches(5.88), Inches(6.1), Inches(2.25), Inches(0.94), "12", "Collections by Year 3", fill_rgb=RGBColor(0xF7, 0xF0, 0xE5), line_rgb=LINE_RGB, value_rgb=NAVY_RGB, label_rgb=MUTED_RGB)
+    add_text(slide, Inches(8.56), Inches(6.28), Inches(3.4), Inches(0.28), "Premium textiles shaped by place, process, and trust.", 13, NAVY_RGB, bold=True, font_name="Georgia")
+
     prs.core_properties.title = "Ali Dandin Investor Deck"
     prs.core_properties.author = "OpenAI Codex"
     prs.save(str(output))
@@ -1069,135 +1225,328 @@ def build_xlsx() -> None:
             cell.number_format = number_format
         cell.alignment = Alignment(vertical="center")
 
+    def set_widths(ws, widths):
+        for idx, width in enumerate(widths, start=1):
+            ws.column_dimensions[get_column_letter(idx)].width = width
+
     ws = wb.create_sheet("Assumptions")
-    ws.append(["Assumption", "Value", "Notes"])
-    assumptions = [
-        ("Audience Year 1", 50000, "Combined social and owned audience"),
-        ("Audience Year 2", 250000, "Scaled through content and launches"),
-        ("Audience Year 3", 1000000, "Brand authority and partnerships"),
-        ("Collections Year 1", 4, "Quarterly launch cadence"),
-        ("Collections Year 2", 8, "Bi-monthly cadence"),
-        ("Collections Year 3", 12, "Monthly launch cadence"),
-        ("ASP Year 1", 65, "Premium entry assortment"),
-        ("ASP Year 2", 70, "Expanded premium mix"),
-        ("ASP Year 3", 72, "Private label and richer assortment"),
-        ("Gross Margin Target Low", 0.55, "Conservative blended margin"),
-        ("Gross Margin Target High", 0.65, "Private label upside"),
-        ("Membership Price", 8, "Passport Club monthly price"),
+    ws.append(["Metric", "Year 1", "Year 2", "Year 3", "Notes"])
+    assumption_rows = [
+        ("Audience size", AUDIENCE[0], AUDIENCE[1], AUDIENCE[2], "Combined social, email, and owned audience"),
+        ("Collections launched", COLLECTIONS[0], COLLECTIONS[1], COLLECTIONS[2], "Quarterly to monthly cadence"),
+        ("Total units sold", TOTAL_UNITS[0], TOTAL_UNITS[1], TOTAL_UNITS[2], "Scaled through launch cadence and repeat purchase"),
+        ("Average selling price", AVERAGE_SELLING_PRICE[0], AVERAGE_SELLING_PRICE[1], AVERAGE_SELLING_PRICE[2], "Premium textile pricing"),
+        ("Product revenue", PRODUCT_REVENUE[0], PRODUCT_REVENUE[1], PRODUCT_REVENUE[2], "Collection and product sales"),
+        ("Membership conversion", MEMBERSHIP_CONVERSION[0], MEMBERSHIP_CONVERSION[1], MEMBERSHIP_CONVERSION[2], "Audience conversion into Passport Club"),
+        ("Membership count", MEMBERSHIP_COUNT[0], MEMBERSHIP_COUNT[1], MEMBERSHIP_COUNT[2], "Recurring member base"),
+        ("Membership price", MEMBERSHIP_PRICE, MEMBERSHIP_PRICE, MEMBERSHIP_PRICE, "Monthly Passport Club price"),
+        ("Membership revenue", MEMBERSHIP_REVENUE[0], MEMBERSHIP_REVENUE[1], MEMBERSHIP_REVENUE[2], "Annual recurring revenue"),
+        ("Partnership revenue", PARTNERSHIP_REVENUE[0], PARTNERSHIP_REVENUE[1], PARTNERSHIP_REVENUE[2], "Affiliate and brand partnership income"),
+        ("Total revenue", REVENUE[0], REVENUE[1], REVENUE[2], "Combined revenue view"),
+        ("COGS", COGS[0], COGS[1], COGS[2], "Product, import, packaging, and fulfillment"),
+        ("Travel & sourcing", TRAVEL_AND_SOURCING[0], TRAVEL_AND_SOURCING[1], TRAVEL_AND_SOURCING[2], "Trips, supplier meetings, and quality control"),
+        ("Team cost", TEAM_COST[0], TEAM_COST[1], TEAM_COST[2], "Core staffing and contractor support"),
+        ("Marketing & growth", MARKETING_AND_GROWTH[0], MARKETING_AND_GROWTH[1], MARKETING_AND_GROWTH[2], "Content amplification and demand generation"),
+        ("General operations", GENERAL_OPS[0], GENERAL_OPS[1], GENERAL_OPS[2], "Tools, admin, platform, and overhead"),
+        ("Total operating costs", OPERATING_COSTS[0], OPERATING_COSTS[1], OPERATING_COSTS[2], "Operating expense view"),
+        ("Gross profit", GROSS_PROFIT[0], GROSS_PROFIT[1], GROSS_PROFIT[2], "Revenue minus COGS"),
+        ("Operating profit", OPERATING_PROFIT[0], OPERATING_PROFIT[1], OPERATING_PROFIT[2], "Gross profit minus operating costs"),
     ]
-    for row in assumptions:
+    for row in assumption_rows:
         ws.append(list(row))
     for cell in ws[1]:
         style_header(cell)
-    for row in ws.iter_rows(min_row=2):
-        for idx, cell in enumerate(row):
-            style_cell(cell)
-            if idx == 1 and isinstance(cell.value, (int, float)):
-                cell.number_format = "$#,##0.00" if "ASP" in row[0].value or "Price" in row[0].value else "0.00%"
-                if "Audience" in row[0].value or "Collections" in row[0].value:
-                    cell.number_format = "#,##0"
-    ws.column_dimensions["A"].width = 28
-    ws.column_dimensions["B"].width = 16
-    ws.column_dimensions["C"].width = 36
-
-    ws = wb.create_sheet("Revenue")
-    revenue_rows = [
-        ["Metric", "Year 1", "Year 2", "Year 3"],
-        ["Collections launched", 4, 8, 12],
-        ["Total units sold", 10000, 40000, 96000],
-        ["Average selling price", 65, 70, 72],
-        ["Product revenue", 650000, 2800000, 6912000],
-        ["Membership revenue", 96000, 480000, 1440000],
-        ["Partnership + affiliate", 80000, 320000, 1000000],
-        ["Total revenue", 826000, 3600000, 9352000],
-    ]
-    for row in revenue_rows:
-        ws.append(row)
-    for cell in ws[1]:
-        style_header(cell)
+    currency_rows = {
+        "Average selling price",
+        "Product revenue",
+        "Membership price",
+        "Membership revenue",
+        "Partnership revenue",
+        "Total revenue",
+        "COGS",
+        "Travel & sourcing",
+        "Team cost",
+        "Marketing & growth",
+        "General operations",
+        "Total operating costs",
+        "Gross profit",
+        "Operating profit",
+    }
+    percent_rows = {"Membership conversion"}
+    highlighted_rows = {"Total revenue", "Gross profit", "Operating profit"}
     for row in ws.iter_rows(min_row=2):
         label = row[0].value
         for idx, cell in enumerate(row):
-            style_cell(cell, bold=label == "Total revenue", fill=green_fill if label == "Total revenue" else None)
-            if idx > 0:
-                if "revenue" in str(label).lower() or "price" in str(label).lower() or "affiliate" in str(label).lower():
+            style_cell(cell, bold=label in highlighted_rows, fill=green_fill if label in highlighted_rows else None)
+            if 1 <= idx <= 3:
+                if label in percent_rows:
+                    cell.number_format = "0.0%"
+                elif label in currency_rows:
                     cell.number_format = "$#,##0"
                 else:
                     cell.number_format = "#,##0"
-    for col, width in zip("ABCD", [30, 16, 16, 16]):
-        ws.column_dimensions[col].width = width
+    set_widths(ws, [24, 15, 15, 15, 44])
 
-    ws = wb.create_sheet("COGS_Opex")
-    rows = [
-        ["Metric", "Year 1", "Year 2", "Year 3"],
-        ["COGS", 280000, 1120000, 2688000],
-        ["Travel and sourcing", 60000, 85000, 120000],
-        ["Team", 150000, 450000, 900000],
-        ["Marketing and growth", 82600, 432000, 1028720],
-        ["General operations", 75000, 180000, 350000],
-        ["Total operating costs", 367600, 1147000, 2398720],
+    ws = wb.create_sheet("SKU_Model")
+    sku_header = [
+        "SKU",
+        "Unit Mix %",
+        "Role",
+        "Y1 Units",
+        "Y1 ASP",
+        "Y1 Revenue",
+        "Y1 Cost/Unit",
+        "Y1 Gross Profit",
+        "Y2 Units",
+        "Y2 ASP",
+        "Y2 Revenue",
+        "Y2 Cost/Unit",
+        "Y2 Gross Profit",
+        "Y3 Units",
+        "Y3 ASP",
+        "Y3 Revenue",
+        "Y3 Cost/Unit",
+        "Y3 Gross Profit",
     ]
-    for row in rows:
-        ws.append(row)
+    ws.append(sku_header)
+    for row_idx, sku in enumerate(SKU_MODELS, start=2):
+        ws.cell(row=row_idx, column=1, value=sku.name)
+        ws.cell(row=row_idx, column=2, value=sku.unit_mix)
+        ws.cell(row=row_idx, column=3, value=sku.role)
+        ws.cell(row=row_idx, column=4, value=f"=ROUND(Assumptions!B4*$B{row_idx},0)")
+        ws.cell(row=row_idx, column=5, value=sku.asp[0])
+        ws.cell(row=row_idx, column=6, value=f"=D{row_idx}*E{row_idx}")
+        ws.cell(row=row_idx, column=7, value=sku.direct_cost[0])
+        ws.cell(row=row_idx, column=8, value=f"=F{row_idx}-(D{row_idx}*G{row_idx})")
+        ws.cell(row=row_idx, column=9, value=f"=ROUND(Assumptions!C4*$B{row_idx},0)")
+        ws.cell(row=row_idx, column=10, value=sku.asp[1])
+        ws.cell(row=row_idx, column=11, value=f"=I{row_idx}*J{row_idx}")
+        ws.cell(row=row_idx, column=12, value=sku.direct_cost[1])
+        ws.cell(row=row_idx, column=13, value=f"=K{row_idx}-(I{row_idx}*L{row_idx})")
+        ws.cell(row=row_idx, column=14, value=f"=ROUND(Assumptions!D4*$B{row_idx},0)")
+        ws.cell(row=row_idx, column=15, value=sku.asp[2])
+        ws.cell(row=row_idx, column=16, value=f"=N{row_idx}*O{row_idx}")
+        ws.cell(row=row_idx, column=17, value=sku.direct_cost[2])
+        ws.cell(row=row_idx, column=18, value=f"=P{row_idx}-(N{row_idx}*Q{row_idx})")
+    total_row = len(SKU_MODELS) + 2
+    ws.cell(row=total_row, column=1, value="Illustrative total")
+    for col in [4, 6, 8, 9, 11, 13, 14, 16, 18]:
+        letter = get_column_letter(col)
+        ws.cell(row=total_row, column=col, value=f"=SUM({letter}2:{letter}{total_row - 1})")
     for cell in ws[1]:
         style_header(cell)
-    for row in ws.iter_rows(min_row=2):
-        label = row[0].value
-        for idx, cell in enumerate(row):
-            style_cell(cell, bold=label == "Total operating costs", fill=green_fill if label == "Total operating costs" else None)
-            if idx > 0:
+    for row in ws.iter_rows(min_row=2, max_row=total_row):
+        is_total = row[0].row == total_row
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell, bold=is_total, fill=green_fill if is_total else None)
+            if idx == 2:
+                cell.number_format = "0.0%"
+            elif idx in {5, 6, 7, 8, 10, 11, 12, 13, 15, 16, 17, 18}:
                 cell.number_format = "$#,##0"
-    for col, width in zip("ABCD", [30, 16, 16, 16]):
-        ws.column_dimensions[col].width = width
+            elif idx in {4, 9, 14}:
+                cell.number_format = "#,##0"
+    set_widths(ws, [24, 11, 34, 12, 10, 13, 11, 13, 12, 10, 13, 11, 13, 12, 10, 13, 11, 13])
+
+    ws = wb.create_sheet("Launch_Cadence")
+    ws.append(["Year", "Launch count", "Featured collections", "Avg units / launch", "Avg revenue / launch", "Operating focus"])
+    for row_idx, (year_label, cadence, featured, note) in enumerate(LAUNCH_CADENCE, start=2):
+        year_number = row_idx - 1
+        ws.cell(row=row_idx, column=1, value=year_label)
+        ws.cell(row=row_idx, column=2, value=f"=Assumptions!{get_column_letter(year_number + 1)}3")
+        ws.cell(row=row_idx, column=3, value=featured)
+        ws.cell(row=row_idx, column=4, value=f"=Assumptions!{get_column_letter(year_number + 1)}4/Assumptions!{get_column_letter(year_number + 1)}3")
+        ws.cell(row=row_idx, column=5, value=f"=Assumptions!{get_column_letter(year_number + 1)}6/Assumptions!{get_column_letter(year_number + 1)}3")
+        ws.cell(row=row_idx, column=6, value=note)
+    for cell in ws[1]:
+        style_header(cell)
+    for row in ws.iter_rows(min_row=2, max_row=4):
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell)
+            if idx == 4:
+                cell.number_format = "#,##0"
+            elif idx == 5:
+                cell.number_format = "$#,##0"
+    set_widths(ws, [12, 12, 42, 16, 18, 50])
+
+    ws = wb.create_sheet("Membership_Model")
+    ws.append(["Metric", "Year 1", "Year 2", "Year 3", "Method"])
+    membership_rows = [
+        ("Audience size", "=Assumptions!B2", "=Assumptions!C2", "=Assumptions!D2", "Pulled from assumptions"),
+        ("Conversion rate", "=Assumptions!B7", "=Assumptions!C7", "=Assumptions!D7", "Audience-to-member conversion"),
+        ("Members", "=ROUND(B2*B3,0)", "=ROUND(C2*C3,0)", "=ROUND(D2*D3,0)", "Derived member base"),
+        ("Price / month", "=Assumptions!B8", "=Assumptions!C8", "=Assumptions!D8", "Monthly Passport Club price"),
+        ("Months billed", 12, 12, 12, "Annualized view"),
+        ("Monthly recurring revenue", "=B3*0", "=C3*0", "=D3*0", "Spacer row for styling"),
+        ("Annual membership revenue", "=B4*B5*B6", "=C4*C5*C6", "=D4*D5*D6", "Matches base planning case"),
+    ]
+    for row in membership_rows:
+        ws.append(list(row))
+    for cell in ws[1]:
+        style_header(cell)
+    for row in ws.iter_rows(min_row=2, max_row=8):
+        label = row[0].value
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell, bold=label == "Annual membership revenue", fill=green_fill if label == "Annual membership revenue" else None)
+            if 2 <= idx <= 4:
+                if label == "Conversion rate":
+                    cell.number_format = "0.0%"
+                elif label in {"Price / month", "Monthly recurring revenue", "Annual membership revenue"}:
+                    cell.number_format = "$#,##0"
+                else:
+                    cell.number_format = "#,##0"
+    ws["B7"] = "=B4*B3"
+    ws["C7"] = "=C4*C3"
+    ws["D7"] = "=D4*D3"
+    set_widths(ws, [28, 15, 15, 15, 32])
+
+    ws = wb.create_sheet("Revenue_Build")
+    ws.append(["Revenue stream", "Year 1", "Year 2", "Year 3", "Mix note"])
+    revenue_build_rows = [
+        ("Product revenue", "=Assumptions!B6", "=Assumptions!C6", "=Assumptions!D6", "Destination-led collection sales"),
+        ("Membership revenue", "=Membership_Model!B8", "=Membership_Model!C8", "=Membership_Model!D8", "Recurring customer layer"),
+        ("Partnership revenue", "=Assumptions!B10", "=Assumptions!C10", "=Assumptions!D10", "Affiliate and partnership income"),
+        ("Total revenue", "=SUM(B2:B4)", "=SUM(C2:C4)", "=SUM(D2:D4)", "Top-line revenue view"),
+        ("Product mix %", "=B2/B5", "=C2/C5", "=D2/D5", "Share of total revenue"),
+        ("Membership mix %", "=B3/B5", "=C3/C5", "=D3/D5", "Share of total revenue"),
+        ("Partnership mix %", "=B4/B5", "=C4/C5", "=D4/D5", "Share of total revenue"),
+        ("Year-over-year growth", "", "=C5/B5-1", "=D5/C5-1", "Total revenue growth"),
+    ]
+    for row in revenue_build_rows:
+        ws.append(list(row))
+    for cell in ws[1]:
+        style_header(cell)
+    for row in ws.iter_rows(min_row=2, max_row=9):
+        label = row[0].value
+        is_total = label == "Total revenue"
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell, bold=is_total, fill=green_fill if is_total else None)
+            if 2 <= idx <= 4:
+                if "%" in str(label) or label == "Year-over-year growth":
+                    cell.number_format = "0.0%"
+                elif "revenue" in str(label).lower():
+                    cell.number_format = "$#,##0"
+    set_widths(ws, [24, 15, 15, 15, 34])
+    line_chart = LineChart()
+    line_chart.title = "Revenue progression"
+    line_chart.y_axis.title = "USD"
+    line_chart.style = 13
+    data = Reference(ws, min_col=2, max_col=4, min_row=2, max_row=4)
+    cats = Reference(ws, min_col=2, max_col=4, min_row=1, max_row=1)
+    line_chart.add_data(data, titles_from_data=False, from_rows=True)
+    line_chart.set_categories(cats)
+    line_chart.height = 7
+    line_chart.width = 12
+    ws.add_chart(line_chart, "G2")
+
+    ws = wb.create_sheet("Opex_Plan")
+    ws.append(["Operating cost", "Year 1", "Year 2", "Year 3", "Notes"])
+    opex_rows = [
+        ("Travel & sourcing", "=Assumptions!B13", "=Assumptions!C13", "=Assumptions!D13", "Trips, supplier onboarding, and quality control"),
+        ("Team", "=Assumptions!B14", "=Assumptions!C14", "=Assumptions!D14", "Core staffing and specialist support"),
+        ("Marketing & growth", "=Assumptions!B15", "=Assumptions!C15", "=Assumptions!D15", "Content amplification and demand generation"),
+        ("General operations", "=Assumptions!B16", "=Assumptions!C16", "=Assumptions!D16", "Platform, admin, and overhead"),
+        ("Total operating costs", "=SUM(B2:B5)", "=SUM(C2:C5)", "=SUM(D2:D5)", "Total operating cost base"),
+        ("Opex as % of revenue", "=B6/Revenue_Build!B5", "=C6/Revenue_Build!C5", "=D6/Revenue_Build!D5", "Operating cost ratio"),
+    ]
+    for row in opex_rows:
+        ws.append(list(row))
+    for cell in ws[1]:
+        style_header(cell)
+    for row in ws.iter_rows(min_row=2, max_row=7):
+        label = row[0].value
+        is_total = label == "Total operating costs"
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell, bold=is_total, fill=green_fill if is_total else None)
+            if 2 <= idx <= 4:
+                if label == "Opex as % of revenue":
+                    cell.number_format = "0.0%"
+                else:
+                    cell.number_format = "$#,##0"
+    set_widths(ws, [24, 15, 15, 15, 38])
 
     ws = wb.create_sheet("Profitability")
-    rows = [
-        ["Metric", "Year 1", "Year 2", "Year 3"],
-        ["Total revenue", 826000, 3600000, 9352000],
-        ["COGS", 280000, 1120000, 2688000],
-        ["Gross profit", 546000, 2480000, 6664000],
-        ["Total operating costs", 367600, 1147000, 2398720],
-        ["Indicative operating profit", 178400, 1333000, 4265280],
+    ws.append(["Metric", "Year 1", "Year 2", "Year 3"])
+    profitability_rows = [
+        ("Product revenue", "=Revenue_Build!B2", "=Revenue_Build!C2", "=Revenue_Build!D2"),
+        ("Membership revenue", "=Revenue_Build!B3", "=Revenue_Build!C3", "=Revenue_Build!D3"),
+        ("Partnership revenue", "=Revenue_Build!B4", "=Revenue_Build!C4", "=Revenue_Build!D4"),
+        ("Total revenue", "=Revenue_Build!B5", "=Revenue_Build!C5", "=Revenue_Build!D5"),
+        ("COGS", "=Assumptions!B12", "=Assumptions!C12", "=Assumptions!D12"),
+        ("Gross profit", "=B5-B6", "=C5-C6", "=D5-D6"),
+        ("Gross margin %", "=B7/B5", "=C7/C5", "=D7/D5"),
+        ("Total operating costs", "=Opex_Plan!B6", "=Opex_Plan!C6", "=Opex_Plan!D6"),
+        ("Operating profit", "=B7-B9", "=C7-C9", "=D7-D9"),
+        ("Operating margin %", "=B10/B5", "=C10/C5", "=D10/D5"),
     ]
-    for row in rows:
-        ws.append(row)
+    for row in profitability_rows:
+        ws.append(list(row))
     for cell in ws[1]:
         style_header(cell)
-    for row in ws.iter_rows(min_row=2):
+    highlighted = {"Total revenue", "Gross profit", "Operating profit"}
+    percent_labels = {"Gross margin %", "Operating margin %"}
+    for row in ws.iter_rows(min_row=2, max_row=11):
         label = row[0].value
-        for idx, cell in enumerate(row):
-            style_cell(
-                cell,
-                bold=label in {"Gross profit", "Indicative operating profit"},
-                fill=green_fill if label in {"Gross profit", "Indicative operating profit"} else None,
-            )
-            if idx > 0:
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell, bold=label in highlighted, fill=green_fill if label in highlighted else None)
+            if 2 <= idx <= 4:
+                if label in percent_labels:
+                    cell.number_format = "0.0%"
+                else:
+                    cell.number_format = "$#,##0"
+    set_widths(ws, [24, 15, 15, 15])
+    profit_chart = BarChart()
+    profit_chart.type = "col"
+    profit_chart.style = 10
+    profit_chart.title = "Profitability progression"
+    profit_chart.y_axis.title = "USD"
+    profit_data = Reference(ws, min_col=2, max_col=4, min_row=5, max_row=7)
+    profit_chart.add_data(profit_data, titles_from_data=False, from_rows=True)
+    profit_chart.set_categories(Reference(ws, min_col=2, max_col=4, min_row=1, max_row=1))
+    profit_chart.height = 7
+    profit_chart.width = 12
+    ws.add_chart(profit_chart, "F2")
+
+    ws = wb.create_sheet("Capital_Plan")
+    ws.append(["Use of funds", "Initial capital", "Growth capital", "Notes"])
+    for category, initial_capital, growth_capital, note in CAPITAL_PLAN:
+        ws.append([category, initial_capital, growth_capital, note])
+    ws.append(["Total", "=SUM(B2:B7)", "=SUM(C2:C7)", "Illustrative capital plan"])
+    for cell in ws[1]:
+        style_header(cell)
+    for row in ws.iter_rows(min_row=2, max_row=7):
+        for idx, cell in enumerate(row, start=1):
+            style_cell(cell)
+            if idx in {2, 3}:
                 cell.number_format = "$#,##0"
-    for col, width in zip("ABCD", [30, 16, 16, 16]):
-        ws.column_dimensions[col].width = width
+    for cell in ws[8]:
+        style_cell(cell, bold=True, fill=green_fill)
+        if cell.column in {2, 3}:
+            cell.number_format = "$#,##0"
+    set_widths(ws, [30, 16, 16, 46])
 
     ws = wb.create_sheet("Scenario_View")
-    rows = [
-        ["Scenario", "Year 3 Revenue", "Commentary"],
-        ["Base case", 9352000, "Current planning case"],
-        ["Upside case", 12000000, "Faster repeat purchase and earlier private label expansion"],
-        ["Downside case", 6500000, "Slower audience growth and lower sell-through"],
+    ws.append(["Scenario", "Revenue multiplier", "Year 3 revenue", "Operating margin", "Year 3 operating profit", "Commentary"])
+    scenario_rows = [
+        ("Downside", 0.70, "=Profitability!D5*B2", "=Profitability!D11*0.78", "=C2*D2", "Slower audience growth and softer sell-through compress the ramp."),
+        ("Base case", 1.00, "=Profitability!D5*B3", "=Profitability!D11", "=C3*D3", "Current modeled trajectory."),
+        ("Upside", 1.28, "=Profitability!D5*B4", "=Profitability!D11*1.08", "=C4*D4", "Faster repeats, stronger private label traction, and cleaner retention."),
     ]
-    for row in rows:
-        ws.append(row)
+    for row in scenario_rows:
+        ws.append(list(row))
     for cell in ws[1]:
         style_header(cell)
-    for row in ws.iter_rows(min_row=2):
-        for idx, cell in enumerate(row):
+    for row in ws.iter_rows(min_row=2, max_row=4):
+        for idx, cell in enumerate(row, start=1):
             style_cell(cell)
-            if idx == 1:
+            if idx == 2 or idx == 4:
+                cell.number_format = "0.0%"
+            elif idx in {3, 5}:
                 cell.number_format = "$#,##0"
-    ws.column_dimensions["A"].width = 20
-    ws.column_dimensions["B"].width = 18
-    ws.column_dimensions["C"].width = 56
+    set_widths(ws, [16, 18, 18, 16, 20, 56])
 
     for ws in wb.worksheets:
         ws.freeze_panes = "A2"
+        ws.sheet_view.showGridLines = False
 
     wb.save(str(output))
 
