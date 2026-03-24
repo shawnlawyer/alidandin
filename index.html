@@ -230,7 +230,9 @@
     .timeline-grid,
     .archive-grid,
     .two-col,
-    .three-col {
+    .three-col,
+    .year-grid,
+    .phase-grid {
       display: grid;
       gap: 14px;
     }
@@ -279,7 +281,7 @@
     .status-grid {
       position: relative;
       z-index: 1;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       margin-top: 22px;
     }
 
@@ -298,6 +300,7 @@
     .hero .status-card {
       background: rgba(255, 255, 255, 0.08);
       border-color: rgba(255, 255, 255, 0.12);
+      padding: 18px;
     }
 
     .status-card strong,
@@ -323,7 +326,27 @@
     }
 
     .hero .status-card span {
+      display: block;
       color: rgba(247, 244, 238, 0.76);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.76rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .hero .status-card strong {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      line-height: 1;
+      color: #fffaf3;
+      margin-bottom: 8px;
+    }
+
+    .hero .status-card p {
+      margin: 8px 0 0;
+      font-size: 0.9rem;
+      color: rgba(247, 244, 238, 0.84);
     }
 
     .section-head {
@@ -394,6 +417,12 @@
       margin-top: 18px;
     }
 
+    .year-grid,
+    .phase-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 18px;
+    }
+
     .archive-grid {
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       margin-top: 16px;
@@ -409,6 +438,42 @@
     .archive-grid img {
       aspect-ratio: 1 / 1;
       object-fit: cover;
+    }
+
+    .year-card,
+    .phase-card {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper-strong);
+      padding: 18px;
+    }
+
+    .year-card .value,
+    .phase-card .value {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1;
+      color: var(--navy);
+    }
+
+    .year-card .label,
+    .phase-card .label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.76rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .year-card p,
+    .phase-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
     }
 
     .two-col {
@@ -625,31 +690,39 @@
               Ali Dandin is a premium textile brand built around provenance, material intelligence, and destination-led collections.
             </p>
             <p>
-              The brand centers tightly curated textile drops, authority through craftsmanship and sourcing discipline,
-              and a long-term path into signature collections, private label, and selective partnerships.
+              The brand pairs tightly curated textile drops with editorial storytelling and sourcing discipline, creating
+              a path from signature collections into private label, selective partnerships, and broader lifestyle reach.
             </p>
           </div>
           <div class="hero-sidecard">
-            <h3>Brand pillars</h3>
+            <h3>Investment frame</h3>
             <ul>
-              <li>Destination-led collections rooted in craft, material, and place.</li>
-              <li>Premium positioning shaped by provenance, restraint, and editorial taste.</li>
-              <li>Long-term path from curated drops to signature textile lines.</li>
+              <li>One collection-led brand world rather than a broad lifestyle catalog.</li>
+              <li>Material authority anchored in sourcing fluency, provenance, and editorial restraint.</li>
+              <li>Scale driven by repeat collections, stronger pricing, and premium customer trust.</li>
             </ul>
           </div>
         </div>
         <div class="status-grid">
           <div class="status-card">
-            <strong>Category position</strong>
-            <span>A premium textile brand with a focused point of view in global discovery commerce.</span>
+            <strong>$9.35M</strong>
+            <span>Year 3 revenue</span>
+            <p>Product, membership, and partnership revenue compound through collection cadence.</p>
           </div>
           <div class="status-card">
-            <strong>Revenue model</strong>
-            <span>Collections, membership, private label, collaborations, and selective licensing.</span>
+            <strong>55%–65%</strong>
+            <span>Gross margin target</span>
+            <p>Premium textile positioning supports stronger pricing than generic sourced goods.</p>
           </div>
           <div class="status-card">
-            <strong>Scale path</strong>
-            <span>Discovery brand to textile authority to broader lifestyle expansion.</span>
+            <strong>Kyoto</strong>
+            <span>Opening collection</span>
+            <p>The launch story establishes the full brand system through one place, one process, one material.</p>
+          </div>
+          <div class="status-card">
+            <strong>3</strong>
+            <span>Scale phases</span>
+            <p>Discovery brand, textile authority, and broader lifestyle expansion.</p>
           </div>
         </div>
       </section>
@@ -823,21 +896,24 @@
           <p>The storefront translates destination-led collections into premium ecommerce with clear hierarchy and premium conversion logic.</p>
         </div>
         <p>
-          The homepage comp establishes the current storefront language: large textile imagery, one featured collection,
-          one artisan story block, and a compact product grid.
+          The storefront centers large textile imagery, one featured collection, one artisan or process story block, and a
+          disciplined product grid. The result feels editorial and premium rather than catalog-heavy.
         </p>
         <figure>
           <img src="assets/images/shopify_homepage.png" alt="Ali Dandin homepage mockup with indigo textiles, artisan spotlight, and product grid.">
         </figure>
-        <div class="two-col" style="margin-top: 18px;">
+        <div class="card-grid" style="margin-top: 18px;">
           <article class="info-card">
-            <strong>Storefront scope</strong>
-            <ul>
-              <li>Homepage</li>
-              <li>Kyoto Indigo collection page</li>
-              <li>Four product detail pages</li>
-              <li>Basic Passport Club capture</li>
-            </ul>
+            <strong>Collection-led homepage</strong>
+            <p>One featured collection carries the primary merchandising story instead of a broad assortment grid.</p>
+          </article>
+          <article class="info-card">
+            <strong>Editorial product pages</strong>
+            <p>Material, process, and origin sit next to pricing and conversion rather than beneath them.</p>
+          </article>
+          <article class="info-card">
+            <strong>Membership layer</strong>
+            <p>Passport Club capture extends customer value without overwhelming the main product narrative.</p>
           </article>
         </div>
       </section>
@@ -850,7 +926,7 @@
           <p>The sourcing system reinforces both product quality and brand credibility through regional expertise and disciplined assortment.</p>
         </div>
         <p>
-          The sourcing logic in the material is consistent: discovery, documentation, sample orders, and repeatability only
+          The sourcing model follows a consistent sequence: discovery, documentation, sample orders, and repeatability only
           after demand becomes visible.
         </p>
         <figure>
@@ -947,7 +1023,6 @@
             <div class="doc-meta">
               <strong>Business Plan</strong>
             </div>
-            <code>business-plan/</code>
             <p>Full written business plan covering the brand concept, product system, sourcing model, growth plan, and capital strategy.</p>
             <div class="doc-actions">
               <a class="button" href="business-plan/">Open Business Plan</a>
@@ -959,7 +1034,6 @@
             <div class="doc-meta">
               <strong>Investor Deck</strong>
             </div>
-            <code>investor-deck/</code>
             <p>Slide-style investor narrative covering positioning, collection logic, economics, and growth potential.</p>
             <div class="doc-actions">
               <a class="button" href="investor-deck/">Open Investor Deck</a>
@@ -971,7 +1045,6 @@
             <div class="doc-meta">
               <strong>Financial Model</strong>
             </div>
-            <code>financial-model/</code>
             <p>Structured financial planning view covering assumptions, unit economics, revenue growth, and capital requirements.</p>
             <div class="doc-actions">
               <a class="button" href="financial-model/">Open Financial Model</a>
@@ -980,18 +1053,21 @@
           </article>
         </div>
 
-        <div class="stats-grid">
-          <article class="note-card">
-            <strong>Revenue mix</strong>
-            <p>Collections first, then membership, collaborations, private label, and eventually licensing.</p>
+        <div class="year-grid">
+          <article class="year-card">
+            <span class="value">$826K</span>
+            <span class="label">Year 1 revenue</span>
+            <p>Four collection launches establish proof, pricing power, and early recurring revenue signals.</p>
           </article>
-          <article class="note-card">
-            <strong>Margin logic</strong>
-            <p>Premium textile framing supports stronger pricing than generic travel-sourced goods.</p>
+          <article class="year-card">
+            <span class="value">$3.60M</span>
+            <span class="label">Year 2 revenue</span>
+            <p>Audience growth and broader recurring revenue deepen the economics without diluting assortment discipline.</p>
           </article>
-          <article class="note-card">
-            <strong>Growth engine</strong>
-            <p>Content → trust → drop → repeat purchase → broader authority.</p>
+          <article class="year-card">
+            <span class="value">$9.35M</span>
+            <span class="label">Year 3 revenue</span>
+            <p>The platform reaches category authority through repeat collections, membership, and premium partnerships.</p>
           </article>
         </div>
       </section>
@@ -1003,22 +1079,21 @@
           </div>
           <p>The brand scales from discovery into authority and into systems that support long-term growth.</p>
         </div>
-        <div class="timeline-grid">
-          <article class="timeline-card">
-            <strong>Phase 1: Discovery brand</strong>
+        <div class="phase-grid">
+          <article class="phase-card">
+            <span class="value">01</span>
+            <span class="label">Discovery brand</span>
             <p>Destination-led textile collections, strong editorial storytelling, and a narrow assortment define the opening phase.</p>
           </article>
-          <article class="timeline-card">
-            <strong>Phase 2: Textile authority</strong>
-            <p>Repeat collections, improve supplier discipline, and introduce selective private label development.</p>
+          <article class="phase-card">
+            <span class="value">02</span>
+            <span class="label">Textile authority</span>
+            <p>Repeat collections, deeper supplier discipline, and selective private label development broaden the platform.</p>
           </article>
-          <article class="timeline-card">
-            <strong>Phase 3: Lifestyle platform</strong>
-            <p>Bedding, throws, home textiles, licensing, and prestige retail define the broader lifestyle expansion layer.</p>
-          </article>
-          <article class="timeline-card">
-            <strong>Strategic end state</strong>
-            <p>A trusted discovery platform with product, media, and partnership leverage around textiles and culture.</p>
+          <article class="phase-card">
+            <span class="value">03</span>
+            <span class="label">Lifestyle platform</span>
+            <p>Bedding, throws, home textiles, licensing, and prestige retail define the broader expansion layer.</p>
           </article>
         </div>
         <p style="margin-top: 18px;">
