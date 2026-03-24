@@ -188,14 +188,22 @@
 
     .two-col,
     .three-col,
-    .metric-grid {
+    .metric-grid,
+    .stat-grid,
+    .year-grid,
+    .mix-grid,
+    .scenario-grid {
       display: grid;
       gap: 20px;
     }
 
     .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .three-col,
-    .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .metric-grid,
+    .mix-grid,
+    .scenario-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .year-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .card {
       padding: 20px;
@@ -212,6 +220,129 @@
     .card strong { display: block; margin-bottom: 8px; font-size: 1rem; }
     .lede { font-size: 1.08rem; color: var(--navy); }
     .hero .lede { color: rgba(247, 243, 237, 0.88); }
+
+    .stat-tile {
+      padding: 22px 20px;
+      border-radius: 18px;
+      background: rgba(255, 250, 243, 0.1);
+      border: 1px solid rgba(255, 250, 243, 0.14);
+    }
+
+    .stat-tile .value,
+    .year-card .value {
+      display: block;
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 3vw, 3.2rem);
+      line-height: 1;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .hero .stat-tile .value {
+      color: #fffaf3;
+    }
+
+    .stat-tile .label,
+    .year-card .label {
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .hero .stat-tile .label {
+      color: rgba(247, 243, 237, 0.74);
+    }
+
+    .hero .stat-tile p {
+      margin: 8px 0 0;
+      font-size: 0.92rem;
+      color: rgba(247, 243, 237, 0.82);
+    }
+
+    .year-card {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 250, 243, 0.96), rgba(255, 250, 243, 0.72));
+    }
+
+    .year-card ul,
+    .mix-card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+    }
+
+    .year-card li,
+    .mix-card li {
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .chart-card {
+      padding: 22px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 243, 0.78);
+    }
+
+    .bar-chart {
+      display: grid;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr) 112px;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .bar-label {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .bar-track {
+      position: relative;
+      height: 14px;
+      border-radius: 999px;
+      background: rgba(30, 42, 58, 0.08);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-radius: 999px;
+    }
+
+    .bar-fill.revenue { background: linear-gradient(90deg, var(--sand), #dbc09b); }
+    .bar-fill.gross { background: linear-gradient(90deg, var(--olive), #92a46f); }
+    .bar-fill.profit { background: linear-gradient(90deg, var(--terracotta), #d48e62); }
+
+    .bar-value {
+      text-align: right;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .mix-card {
+      padding: 22px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 243, 0.76);
+    }
+
+    .mix-card .share {
+      display: block;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
 
     table {
       width: 100%;
@@ -275,9 +406,11 @@
 
     @media (max-width: 760px) {
       section, .hero { padding: 26px 20px; }
-      .two-col, .three-col, .metric-grid { grid-template-columns: 1fr; }
+      .two-col, .three-col, .metric-grid, .stat-grid, .year-grid, .mix-grid, .scenario-grid { grid-template-columns: 1fr; }
       .section-head { display: block; }
       .section-head p { text-align: left; margin-top: 10px; }
+      .bar-row { grid-template-columns: 1fr; }
+      .bar-value { text-align: left; }
     }
   </style>
 </head>
@@ -312,16 +445,28 @@
         <div class="eyebrow">Ali Dandin financial model</div>
         <h2>Financial planning for a premium textile brand</h2>
         <p class="lede">
-          The Ali Dandin model is built on premium average selling prices, narrow destination-led collections, content-driven demand, and disciplined expansion into higher-margin product lines.
+          The financial case centers on narrow destination-led collections, premium average selling prices, disciplined inventory, and a revenue mix that improves as the brand expands into recurring and higher-margin lines.
         </p>
-        <div class="two-col" style="margin-top: 18px;">
-          <div class="card">
-            <strong>Model logic</strong>
-            <p>Collection revenue establishes the business. Membership, collaborations, and later private label improve revenue quality and margin depth.</p>
+        <div class="stat-grid" style="margin-top: 22px;">
+          <div class="stat-tile">
+            <span class="value">$9.35M</span>
+            <span class="label">Year 3 revenue</span>
+            <p>Scale reached through product, membership, and partnerships.</p>
           </div>
-          <div class="card">
-            <strong>Operating logic</strong>
-            <p>Small-batch collection discipline protects early inventory, while premium textile positioning supports stronger pricing than generic travel-sourced goods.</p>
+          <div class="stat-tile">
+            <span class="value">57%–61%</span>
+            <span class="label">Gross margin range</span>
+            <p>Premium textile pricing with disciplined direct costs.</p>
+          </div>
+          <div class="stat-tile">
+            <span class="value">$35K–$70K</span>
+            <span class="label">Initial capital</span>
+            <p>Travel, product development, inventory, and commerce setup.</p>
+          </div>
+          <div class="stat-tile">
+            <span class="value">12</span>
+            <span class="label">Collections by Year 3</span>
+            <p>Cadence grows as the platform moves from proof to authority.</p>
           </div>
         </div>
         <div class="button-row">
@@ -334,20 +479,38 @@
       <section id="assumptions">
         <div class="section-head">
           <h3>Core Assumptions</h3>
-          <p>The planning case assumes controlled assortment growth and premium category pricing.</p>
+          <p>The base case assumes measured assortment expansion, premium pricing, and content-supported conversion.</p>
         </div>
-        <div class="three-col">
-          <article class="card">
-            <strong>Audience growth</strong>
-            <p>50K in Year 1, 250K in Year 2, and 1M in Year 3 across commerce-supportive channels.</p>
+        <div class="year-grid">
+          <article class="year-card">
+            <span class="value">Year 1</span>
+            <span class="label">Foundation</span>
+            <ul>
+              <li>50K audience</li>
+              <li>4 collections</li>
+              <li>$65 average selling price</li>
+              <li>10,000 total units</li>
+            </ul>
           </article>
-          <article class="card">
-            <strong>Collection cadence</strong>
-            <p>4 launches in Year 1, 8 in Year 2, and 12 in Year 3.</p>
+          <article class="year-card">
+            <span class="value">Year 2</span>
+            <span class="label">Expansion</span>
+            <ul>
+              <li>250K audience</li>
+              <li>8 collections</li>
+              <li>$70 average selling price</li>
+              <li>40,000 total units</li>
+            </ul>
           </article>
-          <article class="card">
-            <strong>Pricing</strong>
-            <p>Average selling price from $65 in Year 1 to $72 in Year 3, reflecting premium textile positioning.</p>
+          <article class="year-card">
+            <span class="value">Year 3</span>
+            <span class="label">Authority</span>
+            <ul>
+              <li>1M audience</li>
+              <li>12 collections</li>
+              <li>$72 average selling price</li>
+              <li>96,000 total units</li>
+            </ul>
           </article>
         </div>
       </section>
@@ -355,110 +518,87 @@
       <section id="unit-economics">
         <div class="section-head">
           <h3>Unit Economics</h3>
-          <p>A representative product economics model shows why the category supports premium margins.</p>
+          <p>A representative product model shows why textiles support premium pricing without sacrificing margin quality.</p>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Line item</th>
-                <th>Per unit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Average selling price</td>
-                <td>$65</td>
-              </tr>
-              <tr>
-                <td>Product cost</td>
-                <td>$14</td>
-              </tr>
-              <tr>
-                <td>Shipping and import</td>
-                <td>$8</td>
-              </tr>
-              <tr>
-                <td>Fulfillment and packaging</td>
-                <td>$6</td>
-              </tr>
-              <tr>
-                <td>Total direct cost</td>
-                <td>$28</td>
-              </tr>
-              <tr>
-                <td>Gross profit</td>
-                <td>$37</td>
-              </tr>
-              <tr>
-                <td>Gross margin</td>
-                <td>57%</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="mix-grid">
+          <article class="mix-card">
+            <span class="share">$65</span>
+            <strong>Average selling price</strong>
+            <ul>
+              <li>Premium category positioning</li>
+              <li>Story-driven merchandising</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">$28</span>
+            <strong>Total direct cost</strong>
+            <ul>
+              <li>$14 product cost</li>
+              <li>$8 shipping and import</li>
+              <li>$6 fulfillment and packaging</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">$37</span>
+            <strong>Gross profit per unit</strong>
+            <ul>
+              <li>57% gross margin</li>
+              <li>Supports reinvestment into content and sourcing</li>
+            </ul>
+          </article>
         </div>
       </section>
 
       <section id="revenue-plan">
         <div class="section-head">
           <h3>Revenue Plan</h3>
-          <p>The base case grows from collection revenue into a broader mix of product and recurring revenue streams.</p>
+          <p>The model starts with destination-led product drops and compounds into membership, partnerships, and future private label depth.</p>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Year 1</th>
-                <th>Year 2</th>
-                <th>Year 3</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Collections launched</td>
-                <td>4</td>
-                <td>8</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <td>Total units sold</td>
-                <td>10,000</td>
-                <td>40,000</td>
-                <td>96,000</td>
-              </tr>
-              <tr>
-                <td>Average selling price</td>
-                <td>$65</td>
-                <td>$70</td>
-                <td>$72</td>
-              </tr>
-              <tr>
-                <td>Product revenue</td>
-                <td>$650,000</td>
-                <td>$2,800,000</td>
-                <td>$6,912,000</td>
-              </tr>
-              <tr>
-                <td>Membership revenue</td>
-                <td>$96,000</td>
-                <td>$480,000</td>
-                <td>$1,440,000</td>
-              </tr>
-              <tr>
-                <td>Brand partnerships + affiliate</td>
-                <td>$80,000</td>
-                <td>$320,000</td>
-                <td>$1,000,000</td>
-              </tr>
-              <tr>
-                <td>Total revenue</td>
-                <td>$826,000</td>
-                <td>$3,600,000</td>
-                <td>$9,352,000</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="chart-card">
+          <strong>Revenue progression</strong>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label">Year 1</div>
+              <div class="bar-track"><div class="bar-fill revenue" style="width: 9%;"></div></div>
+              <div class="bar-value">$826K</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Year 2</div>
+              <div class="bar-track"><div class="bar-fill revenue" style="width: 38.5%;"></div></div>
+              <div class="bar-value">$3.60M</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Year 3</div>
+              <div class="bar-track"><div class="bar-fill revenue" style="width: 100%;"></div></div>
+              <div class="bar-value">$9.35M</div>
+            </div>
+          </div>
+        </div>
+        <div class="mix-grid" style="margin-top: 20px;">
+          <article class="mix-card">
+            <span class="share">74%</span>
+            <strong>Product revenue mix</strong>
+            <ul>
+              <li>$6.91M from collection and product sales in Year 3</li>
+              <li>Primary driver of brand and margin quality</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">15%</span>
+            <strong>Membership revenue mix</strong>
+            <ul>
+              <li>$1.44M in Year 3 recurring revenue</li>
+              <li>Supports deeper customer retention and early access economics</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">11%</span>
+            <strong>Partnership revenue mix</strong>
+            <ul>
+              <li>$1.00M from affiliate and brand partnerships</li>
+              <li>Expands monetization without diluting the core assortment thesis</li>
+            </ul>
+          </article>
         </div>
       </section>
 
@@ -524,54 +664,62 @@
       <section id="profitability">
         <div class="section-head">
           <h3>Profitability</h3>
-          <p>The model supports a breakeven-to-profit trajectory once scale and brand efficiency improve.</p>
+          <p>Scale improves gross profit quickly because the brand compounds through assortment discipline rather than SKU sprawl.</p>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Year 1</th>
-                <th>Year 2</th>
-                <th>Year 3</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Total revenue</td>
-                <td>$826,000</td>
-                <td>$3,600,000</td>
-                <td>$9,352,000</td>
-              </tr>
-              <tr>
-                <td>Estimated COGS</td>
-                <td>$280,000</td>
-                <td>$1,120,000</td>
-                <td>$2,688,000</td>
-              </tr>
-              <tr>
-                <td>Gross profit</td>
-                <td>$546,000</td>
-                <td>$2,480,000</td>
-                <td>$6,664,000</td>
-              </tr>
-              <tr>
-                <td>Indicative operating profit</td>
-                <td>Breakeven to $100K</td>
-                <td>$600K–$900K</td>
-                <td>$2M–$3M</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="chart-card">
+          <strong>Gross profit progression</strong>
+          <div class="bar-chart">
+            <div class="bar-row">
+              <div class="bar-label">Year 1</div>
+              <div class="bar-track"><div class="bar-fill gross" style="width: 8.2%;"></div></div>
+              <div class="bar-value">$546K</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Year 2</div>
+              <div class="bar-track"><div class="bar-fill gross" style="width: 37.2%;"></div></div>
+              <div class="bar-value">$2.48M</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label">Year 3</div>
+              <div class="bar-track"><div class="bar-fill gross" style="width: 100%;"></div></div>
+              <div class="bar-value">$6.66M</div>
+            </div>
+          </div>
+        </div>
+        <div class="mix-grid" style="margin-top: 20px;">
+          <article class="mix-card">
+            <span class="share">$546K</span>
+            <strong>Year 1 gross profit</strong>
+            <ul>
+              <li>Proof phase driven by four focused launches</li>
+              <li>Breakeven-to-profit operating range</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">$2.48M</span>
+            <strong>Year 2 gross profit</strong>
+            <ul>
+              <li>Higher cadence and audience scale improve leverage</li>
+              <li>Operating profit range of $600K–$900K</li>
+            </ul>
+          </article>
+          <article class="mix-card">
+            <span class="share">$6.66M</span>
+            <strong>Year 3 gross profit</strong>
+            <ul>
+              <li>12 collections establish the brand as a category authority</li>
+              <li>Operating profit range of $2M–$3M</li>
+            </ul>
+          </article>
         </div>
       </section>
 
       <section id="scenarios">
         <div class="section-head">
           <h3>Scenario View</h3>
-          <p>The range of outcomes is driven by launch sell-through, audience growth, and how quickly the brand expands into repeatable lines.</p>
+          <p>The outcome range is driven by sell-through, audience conversion, and the speed of repeatable line expansion.</p>
         </div>
-        <div class="three-col">
+        <div class="scenario-grid">
           <article class="card">
             <strong>Base case</strong>
             <p>Steady audience growth, 4→8→12 collection cadence, and premium ASP discipline lead to ~ $9.35M Year 3 revenue.</p>
@@ -590,7 +738,7 @@
       <section id="capital">
         <div class="section-head">
           <h3>Capital Requirements</h3>
-          <p>The model supports a staged capital path: early self-funded proof, followed by outside capital once traction is visible.</p>
+          <p>Capital supports the first wave of product, sourcing, content, and operating infrastructure before the brand scales into broader distribution.</p>
         </div>
         <div class="two-col">
           <div class="card">
@@ -607,7 +755,6 @@
           <a class="button secondary" href="../assets/docs/financial_model.xlsx" download>Download XLSX</a>
           <a class="button secondary" href="../investor-deck/">Open Investor Deck</a>
         </div>
-        <p class="small">This financial model page summarizes the current planning case. It should eventually be paired with a deeper editable workbook.</p>
       </section>
     </main>
   </div>
